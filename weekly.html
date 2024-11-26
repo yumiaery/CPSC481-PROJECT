@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Calendar View</title>
+  <link rel="stylesheet" href="monthly.css">
+</head>
+<body>
+  <div class="calendar-container">
+    <!-- Header -->
+    <div class="calendar-header">
+      <input type="text" placeholder="Search Patients..." class="search-bar">
+      <div class="legend-container">
+        <div class="legend-item">
+          <span class="legend-color doctor1"></span> Doctor1
+        </div>
+        <div class="legend-item">
+          <span class="legend-color doctor2"></span> Doctor2
+        </div>
+        <div class="legend-item">
+          <span class="legend-color doctor3"></span> Doctor3
+        </div>
+      </div>
+      <div class="filter-container">
+        <span>Filters:</span>
+        <select>
+          <option value="doctors">Doctors</option>
+        </select>
+        <div class="profile-icon">👤</div>
+      </div>
+    </div>
+
+
+    <!-- Tabs for View -->
+    <div class="tabs-header">
+      <div class="view-tabs">
+        <span class="tab">DAILY</span>
+        <span class="tab">WEEKLY</span>
+        <span class="tab active">MONTHLY</span>
+      </div>
+    </div>
+
+    <!-- Date Navigation -->
+    <div class="calendar-date">
+      <button class="arrow-btn">◀</button>
+      <span>October 2024</span>
+      <button class="arrow-btn">▶</button>
+    </div>
+
+    <!-- Monthly Calendar Grid -->
+    <div class="calendar-grid monthly">
+      <!-- Days of the Week -->
+      <div class="day-label">Monday</div>
+      <div class="day-label">Tuesday</div>
+      <div class="day-label">Wednesday</div>
+      <div class="day-label">Thursday</div>
+      <div class="day-label">Friday</div>
+      <div class="day-label">Saturday</div>
+      <div class="day-label">Sunday</div>
+
+      <!-- Dates -->
+      <div class="day-cell"><span class="date">1</span> 
+        <div class="appointment doctor1">
+          <div class="patient-name">John Doe</div>
+          <div class="doctor-name">Dr. Smith</div>
+          <div class="appointment-time">9:00-10:00AM</div>
+        </div>
+    </div>
+      <div class="day-cell"><span class="date">2</span></div>
+      <div class="day-cell"><span class="date">3</span> <div class="appointment doctor2"></div></div>
+      <div class="day-cell"><span class="date">4</span></div>
+      <div class="day-cell"><span class="date">5</span></div>
+      <div class="day-cell"><span class="date">6</span></div>
+      <div class="day-cell"><span class="date">7</span> <div class="appointment doctor3"></div></div>
+      
+      <!-- Repeat for all dates of the month -->
+      <div class="day-cell"><span class="date">8</span></div>
+      <div class="day-cell"><span class="date">9</span> <div class="appointment doctor1"></div></div>
+      <div class="day-cell"><span class="date">10</span></div>
+      <div class="day-cell"><span class="date">11</span> <div class="appointment doctor2"></div></div>
+      <div class="day-cell"><span class="date">12</span> <div class="appointment doctor1"></div></div>
+
+      <div class="day-cell"><span class="date">13</span></div>
+      <div class="day-cell"><span class="date">14</span> <div class="appointment doctor2"></div></div>
+      <div class="day-cell"><span class="date">15</span></div>
+      <div class="day-cell"><span class="date">16</span> <div class="appointment doctor1"></div></div>
+      <div class="day-cell"><span class="date">17</span> <div class="appointment doctor2"></div></div>
+      
+      <div class="day-cell"><span class="date">18</span></div>
+      <div class="day-cell"><span class="date">19</span> <div class="appointment doctor1"></div></div>
+      <div class="day-cell"><span class="date">20</span></div>
+      <div class="day-cell"><span class="date">21</span> <div class="appointment doctor1"></div></div>
+      <div class="day-cell"><span class="date">22</span> <div class="appointment doctor2"></div></div>
+
+      <div class="day-cell"><span class="date">23</span></div>
+      <div class="day-cell"><span class="date">24</span> <div class="appointment doctor3"></div></div>
+      <div class="day-cell"><span class="date">25</span></div>
+      <div class="day-cell"><span class="date">26</span> <div class="appointment doctor3"></div></div>
+      <div class="day-cell"><span class="date">27</span> <div class="appointment doctor1"></div></div>
+      
+      <div class="day-cell"><span class="date">28</span></div>
+      <div class="day-cell"><span class="date">29</span> <div class="appointment doctor3"></div></div>
+      <div class="day-cell"><span class="date">30</span></div>
+      <div class="day-cell"><span class="date">31</span> <div class="appointment doctor2"></div></div>
+    </div>
+  </div>
+</body>
+</html>
