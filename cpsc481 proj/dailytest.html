@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full-Screen Daily View Calendar</title>
+    <link rel="stylesheet" href="dailytest.css">
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <input type="text" placeholder="Search Patients..." class="search-bar">
+            <div class="calendar-date">
+                <button class="arrow-btn">◀</button>
+                <span>Sat. Oct. 5, 2024</span>
+                <button class="arrow-btn">▶</button>
+            </div>
+            <div class="filter-container">
+                <span>Filters:</span>
+                <select>
+                    <option value="doctors">Doctors</option>
+                </select>
+                <div class="profile-icon">👤</div>
+            </div>
+        </div>
+        
+        <!-- New Header for Tabs -->
+        <div class="tabs-header">
+            <div class="view-tabs">
+                <span class="tab active">DAILY</span>
+                <span class="tab">WEEKLY</span>
+                <span class="tab">MONTHLY</span>
+            </div>
+        </div>
+        
+        <div class="calendar-body">
+            <div class="time-column">
+                <div class="time">8:00 AM</div>
+                <div class="time">9:00 AM</div>
+                <div class="time">10:00 AM</div>
+                <div class="time">11:00 AM</div>
+                <div class="time">12:00 PM</div>
+                <div class="time">1:00 PM</div>
+                <div class="time">2:00 PM</div>
+                <div class="time">3:00 PM</div>
+                <div class="time">4:00 PM</div>
+                <div class="time">5:00 PM</div>
+                <div class="time">6:00 PM</div>
+            </div>
+            <div class="schedule-column">
+                <div class="event in-clinic" style="top: 0; height: 40px;">8:00 AM - In-Clinic</div>
+                <div class="event online" style="top: 60px; height: 40px;">10:00 AM - Online</div>
+                <div class="event in-clinic" style="top: 180px; height: 80px;">12:00 PM - In-Clinic</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
