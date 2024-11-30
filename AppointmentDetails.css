@@ -136,33 +136,51 @@
     background-color: #004d40;
   }
 
-  /* Container for the input and search icon */
-.input-container {
-    position: relative;
+  .input-container {
+    position: relative; /* Allows absolute positioning of the edit button inside it */
     display: flex;
     align-items: center;
-  }
-  
-  .input-container input {
-    width: 100%;
-    padding-right: 35px; /* Space for the icon */
+    width: 95%;
+    margin-bottom: 0px;
+}
+
+.input-container input {
+    width: 100%; /* Ensures the input takes up the container space */
+    padding-right: 35px; /* Space for the edit button */
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .input-container .search-btn {
-    position: absolute;
-    right: 5px;
-    top: 1px;
+}
+
+.edit-btn {
+    position: absolute; /* Position the button inside the input container */
+    right: -25px; /* Aligns the button to the right */
+    top: 35%; /* Centers the button vertically */
+    transform: translateY(-50%); /* Adjusts vertical alignment */
     background: none;
     border: none;
-    font-size: 1.2rem;
     cursor: pointer;
-    color: #555;
-  }
+    font-size: 1.2em; /* Adjust the size of the edit button */
+}
   
   .input-container .search-btn:hover {
     color: #000;
   }
   
+  /* Container for the textarea and the edit button */
+.textarea-container {
+  display: flex; /* Align items horizontally */
+  align-items: flex-start; /* Aligns textarea and button at the top */
+  gap: 10px; /* Space between the textarea and the button */
+  position: relative; /* Keeps child elements positioned inside the container */
+  width: 95%;
+}
+
+/* Textarea styling */
+.textarea-container textarea {
+  flex: 1; /* Allows the textarea to take up remaining space */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none; /* Optional: Prevents resizing */
+}
