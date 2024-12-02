@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Full-Screen Scrollable Calendar</title>
-  <link rel="stylesheet" href="weekly.css">
+  <link rel="stylesheet" href="weekly.css"> <!-- Link to the external CSS -->
 </head>
 <body>
   <div class="calendar-container">
@@ -23,8 +23,8 @@
     <!-- Tabs for View -->
     <div class="tabs-header">
       <div class="view-tabs">
-        <span class="tab active">DAILY</span>
-        <span class="tab">WEEKLY</span>
+        <span class="tab">DAILY</span>
+        <span class="tab active">WEEKLY</span>
         <span class="tab">MONTHLY</span>
       </div>
     </div>
@@ -38,10 +38,20 @@
 
     <!-- Scrollable Calendar Grid -->
     <div class="calendar-grid">
+      <!-- Weekdays Header -->
+      <div class="time"></div> <!-- Empty cell for time column -->
+      <div class="weekday">Monday</div>
+      <div class="weekday">Tuesday</div>
+      <div class="weekday">Wednesday</div>
+      <div class="weekday">Thursday</div>
+      <div class="weekday">Friday</div>
+      <div class="weekday">Saturday</div>
+      <div class="weekday">Sunday</div>
+
       <!-- Time Slots -->
       <div class="time">9:00 AM</div>
       <div></div>
-      <div class="appointment in-clinic"></div>
+      <div class="appointment in-clinic" onclick="handleClick(this)"></div>
       <div></div>
       <div></div>
       <div></div>
@@ -50,7 +60,7 @@
 
       <div class="time">10:00 AM</div>
       <div></div>
-      <div class="appointment online"></div>
+      <div class="appointment online" onclick="handleClick(this)"></div>
       <div></div>
       <div></div>
       <div></div>
@@ -62,7 +72,7 @@
       <div></div>
       <div></div>
       <div class="appointment"></div>
-      <div class="appointment in-clinic"></div>
+      <div class="appointment in-clinic" onclick="handleClick(this)"></div>
       <div></div>
       <div></div>
 
@@ -75,7 +85,6 @@
       <div></div>
       <div></div>
 
-      <!-- Add time slots up to 6:00 PM -->
       <div class="time">1:00 PM</div>
       <div></div>
       <div></div>
@@ -131,5 +140,8 @@
       <div></div>
     </div>
   </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="weekly.js"></script>
 </body>
 </html>

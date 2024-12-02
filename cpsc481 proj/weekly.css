@@ -19,7 +19,6 @@ body {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /*max-width: 1400px;*/
   border: 2px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
@@ -125,10 +124,21 @@ body {
   text-align: center;
   color: #000;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .calendar-grid .appointment.online {
   background-color: #c0f7a1;
+}
+
+/* Weekday Header Styling */
+.calendar-grid .weekday {
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 /* Scrollbar Styling */
@@ -144,4 +154,10 @@ body {
 .calendar-grid::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 4px;
+}
+
+/* Add styles for selected time slot */
+.appointment.selected {
+  background-color: #ffa;  /* Highlight color */
+  border: 2px solid #f90;  /* Optional: Add a border for better visibility */
 }
