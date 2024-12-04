@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Full-Screen Daily Calendar</title>
-  <link rel="stylesheet" href="daily2test.css">
+  <link rel="stylesheet" href="daily.css">
 </head>
 <body>
   <div class="calendar-container">
+
     <!-- Header -->
     <div class="calendar-header">
       <input type="text" placeholder="Search Patients..." class="search-bar">
@@ -23,9 +24,9 @@
     <!-- Tabs for View -->
     <div class="tabs-header">
       <div class="view-tabs">
-        <span class="tab active">DAILY</span>
-        <span class="tab">WEEKLY</span>
-        <span class="tab">MONTHLY</span>
+        <span class="tab active" onclick="navigateTo('daily.html')">DAILY</span>
+        <span class="tab" onclick="navigateTo('weekly.html')">WEEKLY</span>
+        <span class="tab" onclick="navigateTo('monthly.html')">MONTHLY</span>
       </div>
     </div>
 
@@ -71,5 +72,6 @@
       <div></div>
     </div>
   </div>
+  <script src="navigation.js"></script>
 </body>
 </html>

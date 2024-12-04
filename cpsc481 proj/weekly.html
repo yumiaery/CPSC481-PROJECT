@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="calendar-container">
+
     <!-- Header -->
     <div class="calendar-header">
       <input type="text" placeholder="Search Patients..." class="search-bar">
@@ -23,11 +24,12 @@
     <!-- Tabs for View -->
     <div class="tabs-header">
       <div class="view-tabs">
-        <span class="tab">DAILY</span>
-        <span class="tab active">WEEKLY</span>
-        <span class="tab">MONTHLY</span>
+        <span class="tab" onclick="navigateTo('daily.html')">DAILY</span>
+        <span class="tab active" onclick="navigateTo('weekly.html')">WEEKLY</span>
+        <span class="tab" onclick="navigateTo('monthly.html')">MONTHLY</span>
       </div>
     </div>
+
 
     <!-- Date Navigation -->
     <div class="calendar-date">
@@ -143,5 +145,6 @@
 
   <!-- Link to external JavaScript file -->
   <script src="weekly.js"></script>
+  <script src="navigation.js"></script>
 </body>
 </html>
