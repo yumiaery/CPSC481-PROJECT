@@ -26,7 +26,7 @@ body {
 
 /* Header Styling */
 .calendar-header {
-  background-color: #c4dff0 ;
+  background-color: #c4dff0;
   padding: 10px;
   display: flex;
   justify-content: space-between;
