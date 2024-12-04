@@ -11,7 +11,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9;
 }
 
 .calendar-container {
@@ -20,7 +19,6 @@ body {
   width: 100%;
   height: 100%;
   border: 2px solid #ccc;
-  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: #fff;
@@ -28,12 +26,12 @@ body {
 
 /* Header Styling */
 .calendar-header {
-  background-color: #eee;
+  background-color: #c4dff0 ;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #000000;
 }
 
 .calendar-header .search-bar {
@@ -91,9 +89,9 @@ body {
 
 /* Tabs Styling */
 .tabs-header {
-  background-color: #f0f0f0;
+  background-color: #c4dff0;
   padding: 10px;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #000000;
 }
 
 .view-tabs {
@@ -124,8 +122,8 @@ body {
   gap: 10px;
   padding: 10px 0;
   font-weight: bold;
-  background-color: #f9f9f9;
-  border-bottom: 2px solid #ccc;
+  background-color: #edf6fc;
+  border-bottom: 2px solid #000000;
 }
 
 /* Monthly Calendar Grid */
@@ -136,19 +134,25 @@ body {
   grid-template-rows: 40px; /* Height for the label cells */
   flex-grow: 1;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: #edf6fc;
 }
 
 .day-label {
   text-align: center;
   font-weight: bold;
-  background-color: #f2f2f2;
+  background-color: #c4dff0;
   padding: 10px;
-  border: 1px solid #ddd;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .day-cell {
-  border: 1px solid #ddd;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
   padding: 10px;
   position: relative;
 }
