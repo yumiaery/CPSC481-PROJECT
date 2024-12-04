@@ -15,8 +15,11 @@
       <input type="text" placeholder="Search Patients..." class="search-bar">
       <div class="filter-container">
         <span>Filters:</span>
-        <select>
-          <option value="doctors">Doctors</option>
+        <select id="doctorFilter">
+          <option value="" selected>Select Doctor</option>
+          <option value="Dr. Smith">Dr. Smith</option>
+          <option value="Dr. Johnson">Dr. Johnson</option>
+          <option value="Dr. Lee">Dr. Lee</option>
         </select>
         <!-- Profile Dropdown -->
         <div class="profile-dropdown">
@@ -163,5 +166,6 @@
   <script src="profile.js"></script>
   <script src="navigation.js"></script>
   <script src="weekly.js"></script>
+
 </body>
 </html>

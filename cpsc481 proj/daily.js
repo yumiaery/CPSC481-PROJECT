@@ -1,49 +1,16 @@
-// // Initialize the current date (starting from Sep 2, 2024)
-// let currentDate = new Date(2024, 11, 9); // Month is 0-based, so 8 = September
+const urlParams = new URLSearchParams(window.location.search);
+const dateParam = urlParams.get("date");
 
-// // Function to format the date as "Day, Month Date, Year"
-// function formatDate(date) {
-//   return date.toLocaleDateString("en-US", {
-//     weekday: "long",  // e.g., "Monday"
-//     month: "long",    // e.g., "September"
-//     day: "numeric",   // e.g., "2"
-//     year: "numeric",  // e.g., "2024"
-//   });
-// }
-
-// // Function to render the current date
-// function renderDay() {
-//   const dayLabel = document.querySelector(".calendar-date span");
-//   dayLabel.textContent = formatDate(currentDate);
-// }
-
-// // Function to navigate to the previous or next day
-// function navigateDay(direction) {
-//   if (direction === "forward") {
-//     currentDate.setDate(currentDate.getDate() + 1); // Go to the next day
-//   } else if (direction === "backward") {
-//     currentDate.setDate(currentDate.getDate() - 1); // Go to the previous day
-//   }
-//   renderDay();
-// }
-
-// // Attach event listeners for the navigation buttons
-// document.addEventListener("DOMContentLoaded", () => {
-//   renderDay();
-
-//   document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () =>
-//     navigateDay("backward")
-//   );
-
-//   document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () =>
-//     navigateDay("forward")
-//   );
-// });
-
-
-
-// Initialize the current date (starting from Dec 9, 2024)
-let currentDate = new Date(2024, 11, 9); // Month is 0-based
+let currentDate = (() => {
+  if (dateParam) {
+    const parts = dateParam.split("-");
+    if (parts.length === 3) {
+      const [year, month, day] = parts.map(Number);
+      return new Date(year, month - 1, day); // Safe parsing (Months are 0-based)
+    }
+  }
+  return new Date(2024, 11, 9); // Default to September 2, 2024
+})();
 
 // Function to format the date as "Day, Month Date, Year"
 function formatDate(date) {
@@ -55,10 +22,35 @@ function formatDate(date) {
   });
 }
 
-// Function to render the current date
+function getWeekRange(date) {
+  const startOfWeek = new Date(date);
+  startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Monday
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
+
+  return {
+    start: startOfWeek.toISOString().split("T")[0],
+    end: endOfWeek.toISOString().split("T")[0],
+  };
+}
+
+function syncWeeklyView() {
+  const weekRange = getWeekRange(currentDate);
+  const weeklyURL = `weekly.html?date=${currentDate.toISOString().split("T")[0]}`;
+  document.querySelector(".view-tabs .tab:nth-child(2)").onclick = () => (window.location.href = weeklyURL);
+}
+
+function syncMonthlyView() {
+  const monthlyURL = `monthly.html?date=${currentDate.toISOString().split("T")[0]}`;
+  document.querySelector(".view-tabs .tab:nth-child(3)").onclick = () => (window.location.href = monthlyURL);
+}
+
+
 function renderDay() {
   const dayLabel = document.querySelector(".calendar-date span");
   dayLabel.textContent = formatDate(currentDate);
+  syncWeeklyView(); // Ensure weekly view syncs with the current date
 }
 
 // Function to navigate to the previous or next day
@@ -69,6 +61,8 @@ function navigateDay(direction) {
     currentDate.setDate(currentDate.getDate() - 1); // Go to the previous day
   }
   renderDay();
+  syncWeeklyView(); // Sync weekly view link
+  syncMonthlyView();
 }
 
 // Function to calculate end time (add 1 hour to start time)
@@ -79,23 +73,34 @@ function calculateEndTime(startTime) {
   let endPeriod = period;
 
   // Handle transitions for 12-hour format
-  if (hour === "12") {
-    // At 12, switch AM/PM
-    endPeriod = period === "AM" ? "PM" : "AM";
-    endHour = 1; // Wrap to 1
-  } else if (endHour === 12) {
-    // Transition period at 12
-    endPeriod = period === "AM" ? "PM" : "AM";
-  } else if (endHour > 12) {
-    // Wrap hours beyond 12 back to 1
-    endHour -= 12;
-  }
+if (endHour === 12) {
+  endPeriod = period === "AM" ? "PM" : "AM"; // Switch AM/PM at 12
+} else if (endHour > 12) {
+  endHour -= 12; // Wrap around after 12
+}
+
+// Ensure end period changes correctly for 11 AM/PM
+if (endHour === 1 && period === "PM") {
+  endPeriod = "AM"; // 11 PM to 12 AM
+} else if (endHour === 1 && period === "AM") {
+  endPeriod = "PM"; // 11 AM to 12 PM
+}
 
   return `${endHour}:${minutes} ${endPeriod}`;
 }
 
+let selectedDoctor = ""; // Track the selected doctor
+
 // Attach event listeners for the navigation buttons and slots
 document.addEventListener("DOMContentLoaded", () => {
+  const doctorFilter = document.getElementById("doctorFilter");
+
+  // Update the selected doctor when the filter changes
+  doctorFilter.addEventListener("change", (event) => {
+    selectedDoctor = event.target.value;
+    console.log(`Selected Doctor: ${selectedDoctor}`);
+  });
+
   renderDay();
 
   // Add navigation button listeners
@@ -122,7 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Set iframe source with query parameters
       const iframe = document.querySelector(".appointment-form-iframe");
-      iframe.src = `AppointmentForm.html?date=${currentDate.toISOString().split("T")[0]}&time=${startTime}&endTime=${endTime}`;
+      iframe.src = `AppointmentForm.html?date=${currentDate.toISOString().split("T")[0]}&time=${startTime}&endTime=${endTime}&doctor=${encodeURIComponent(selectedDoctor)}`;
+
     }
   });
 
@@ -143,3 +149,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+

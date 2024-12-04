@@ -28,10 +28,53 @@ const predefinedWeeks = [
   "Mon, Feb 17, 2025 - Sun, Feb 23, 2025",
 ];
 
-// Track the current week index
-let currentWeekIndex = predefinedWeeks.findIndex((week) =>
-  week.startsWith("Mon, Dec 9, 2024")
-);
+// // Track the current week index
+// let currentWeekIndex = predefinedWeeks.findIndex((week) =>
+//   week.startsWith("Mon, Dec 9, 2024")
+// );
+let currentWeekIndex = 14; // Default to the first week
+
+function syncWithDailyView() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const dateParam = urlParams.get("date");
+
+  if (dateParam) {
+    const date = new Date(dateParam);
+
+    // Calculate start and end of the week
+    const startOfWeek = new Date(date);
+    const dayOffset = startOfWeek.getDay() === 0 ? 6 : startOfWeek.getDay() - 1; // Sunday fix
+    startOfWeek.setDate(startOfWeek.getDate() - dayOffset);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+    // Find the matching week
+    currentWeekIndex = predefinedWeeks.findIndex((week) => {
+      const [start, end] = week.split(" - ");
+      return (
+        new Date(start).toISOString().split("T")[0] === startOfWeek.toISOString().split("T")[0] &&
+        new Date(end).toISOString().split("T")[0] === endOfWeek.toISOString().split("T")[0]
+      );
+    });
+
+    if (currentWeekIndex === -1) {
+      console.error("No matching week found. Defaulting to first week.");
+      currentWeekIndex = 14; // Default to the first week
+    }
+  }
+}
+
+function syncDailyView(date) {
+  const dailyURL = `daily.html?date=${predefinedWeeks[currentWeekIndex].split(" - ")[0]}`;
+  document.querySelector(".view-tabs .tab:nth-child(1)").onclick = () => (window.location.href = dailyURL);
+}
+
+function syncMonthlyView() {
+  const monthlyURL = `monthly.html?date=${predefinedWeeks[currentWeekIndex].split(" - ")[0]}`;
+  document.querySelector(".view-tabs .tab:nth-child(3)").onclick = () => (window.location.href = monthlyURL);
+}
+
 
 // Render the calendar for the current week
 function renderWeek() {
@@ -44,10 +87,7 @@ function renderWeek() {
   // Extract the start date
   const weekRange = predefinedWeeks[currentWeekIndex];
   const [weekStart] = weekRange.split(" - ");
-  const [weekday, month, day] = weekStart.split(" ");
-  const startDate = new Date(2024, 11, 9);
-  startDate.setMonth(new Date(`${month} 1, 2024`).getMonth());
-  startDate.setDate(parseInt(day));
+  const startDate = new Date(weekStart);
 
   // Update weekday headers
   weekdayCells.forEach((cell, i) => {
@@ -86,8 +126,22 @@ function navigateWeek(direction) {
   renderWeek();
 }
 
+let selectedDoctor = ""; // Track the currently selected doctor
+
 document.addEventListener("DOMContentLoaded", () => {
+  syncWithDailyView();
   renderWeek();
+
+  const doctorFilter = document.getElementById("doctorFilter");
+  doctorFilter.addEventListener("change", (event) => {
+    selectedDoctor = event.target.value; // Update the selected doctor
+    console.log(`Selected Doctor: ${selectedDoctor}`);
+  });
+
+  // Sync the daily view with the selected week
+  const startOfWeek = predefinedWeeks[currentWeekIndex].split(" - ")[0];
+  syncDailyView(startOfWeek);
+  syncMonthlyView();
 
   // Add navigation button listeners
   document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () =>
@@ -97,41 +151,55 @@ document.addEventListener("DOMContentLoaded", () => {
     navigateWeek("forward")
   );
 
-  // Handle time slot clicks
+  // Add click event to weekday cells
   const calendarGrid = document.querySelector(".calendar-grid");
+  calendarGrid.addEventListener("click", (event) => {
+    const weekdayCell = event.target.closest(".weekday");
+    if (weekdayCell && weekdayCell.dataset.date) {
+      window.location.href = `daily.html?date=${weekdayCell.dataset.date}`;
+    }
+  });
+
+  // Handle time slot clicks
   calendarGrid.addEventListener("click", (event) => {
     const slot = event.target;
     if (slot.dataset.time && slot.dataset.date) {
       const startTime = slot.dataset.time;
 
-    // Calculate the end time (add 1 hour)
-    const [hour, minutePart] = startTime.split(":");
-    const [minutes, period] = minutePart.split(" ");
-    let endHour = parseInt(hour) + 1;
-    let endPeriod = period;
+      // Calculate the end time (add 1 hour)
+      const [hour, minutePart] = startTime.split(":");
+      const [minutes, period] = minutePart.split(" ");
+      let endHour = parseInt(hour) + 1;
+      let endPeriod = period;
 
-    // Handle transitions for 12 PM and 12 AM
-    if (endHour === 12) {
-      endPeriod = period; // Stay in the same period (PM/AM)
-    } else if (endHour > 12) {
-      endHour -= 12; // Wrap around after 12
-      endPeriod = period === "AM" ? "PM" : "AM"; // Switch AM/PM
-    }
+      // Handle transitions for 12-hour format
+      if (endHour === 12) {
+        endPeriod = period === "AM" ? "PM" : "AM"; // Switch AM/PM at 12
+      } else if (endHour > 12) {
+        endHour -= 12; // Wrap around after 12
+      }
 
-    const endTime = `${endHour}:${minutes} ${endPeriod}`;
+      // Ensure end period changes correctly for 11 AM/PM
+      if (endHour === 1 && period === "PM") {
+        endPeriod = "AM"; // 11 PM to 12 AM
+      } else if (endHour === 1 && period === "AM") {
+        endPeriod = "PM"; // 11 AM to 12 PM
+      }
 
-    // Debugging to verify the endTime
-    console.log(`Start Time: ${startTime}, End Time: ${endTime}`);
+      const endTime = `${endHour}:${minutes} ${endPeriod}`;
 
-    // Show popup
-    document.querySelector(".appointment-form-container").style.display = "block";
-    document.querySelector(".popup-overlay").style.display = "block";
+      // Debugging to verify the endTime
+      console.log(`Start Time: ${startTime}, End Time: ${endTime}`);
 
-    // Set iframe source with query parameters
-    const iframe = document.querySelector(".appointment-form-iframe");
-    iframe.src = `AppointmentForm.html?date=${slot.dataset.date}&time=${slot.dataset.time}&endTime=${endTime}&appointment=${encodeURIComponent(
-      slot.dataset.appointment || ""
-    )}`;
+      // Show popup
+      document.querySelector(".appointment-form-container").style.display = "block";
+      document.querySelector(".popup-overlay").style.display = "block";
+
+      // Set iframe source with query parameters
+      const iframe = document.querySelector(".appointment-form-iframe");
+      iframe.src = `AppointmentForm.html?date=${slot.dataset.date}&time=${slot.dataset.time}&endTime=${endTime}&doctor=${encodeURIComponent(
+        selectedDoctor || "No Doctor Selected"
+      )}`;
     }
   });
 
@@ -151,5 +219,4 @@ document.addEventListener("DOMContentLoaded", () => {
       closePopup();
     }
   });
-  
 });

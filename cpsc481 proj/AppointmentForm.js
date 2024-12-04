@@ -44,3 +44,36 @@ document.querySelector(".cancel-btn").addEventListener("click", closePopup);
 document.querySelector(".close-btn").addEventListener("click", () => {
   window.parent.postMessage({ action: "close" }, "*");
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Extract query parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const doctorName = urlParams.get("doctor");
+  const appointmentDate = urlParams.get("date");
+  const startTime = urlParams.get("time");
+  const endTime = urlParams.get("endTime");
+
+  // Populate fields in the form
+  if (doctorName) {
+    document.getElementById("doctor-name").value = doctorName;
+  }
+  if (appointmentDate) {
+    document.getElementById("appointment-date").value = new Date(appointmentDate).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+  if (startTime) {
+    document.getElementById("start-time").value = startTime;
+  }
+  if (endTime) {
+    document.getElementById("end-time").value = endTime;
+  }
+
+  // Close button functionality
+  document.querySelector(".close-btn").addEventListener("click", () => {
+    window.parent.postMessage({ action: "close" }, "*");
+  });
+});
+

@@ -1,4 +1,14 @@
-// Hardcoded month data
+
+// Parse the date from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const dateParam = urlParams.get("date");
+
+// Set currentMonthYear based on the URL parameter or default to December 2024
+let currentMonthYear = dateParam
+  ? `${new Date(dateParam).toLocaleString("default", { month: "long" })} ${new Date(dateParam).getFullYear()}`
+  : "December 2024";
+
+  // Hardcoded month data
 const hardcodedCalendars = {
     "September 2024": { firstDay: 7, daysInMonth: 30 },
     "October 2024": { firstDay: 2, daysInMonth: 31 },
@@ -7,9 +17,6 @@ const hardcodedCalendars = {
     "January 2025": { firstDay: 3, daysInMonth: 31 },
     "February 2025": { firstDay: 6, daysInMonth: 28 }
   };
-  
-  // Track current month-year
-  let currentMonthYear = "December 2024";
   
   // Render the calendar
   function renderCalendar(monthYear) {
@@ -62,11 +69,25 @@ const hardcodedCalendars = {
     renderCalendar(currentMonthYear);
   }
   
-  // Attach navigation event listeners
   document.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentMonthYear);
   
     document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () => navigate("backward"));
     document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () => navigate("forward"));
+  
+    
+    // Add click event to day cells
+    const calendarGrid = document.querySelector(".calendar-grid.monthly");
+    calendarGrid.addEventListener("click", (event) => {
+      const dayCell = event.target.closest(".day-cell");
+      if (dayCell && dayCell.querySelector(".date")) {
+        const day = dayCell.querySelector(".date").textContent.trim();
+        const [month, year] = currentMonthYear.split(" ");
+        const date = new Date(`${month} ${day}, ${year}`);
+        window.location.href = `daily.html?date=${date.toISOString().split("T")[0]}`;
+      }
+    });
   });
+  
+  
   
