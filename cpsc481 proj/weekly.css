@@ -100,7 +100,6 @@ body {
 }
 
 .calendar-grid .time,
-.calendar-grid .appointment,
 .calendar-grid > div {
   text-align: center;
   padding: 10px;
@@ -114,20 +113,6 @@ body {
 .calendar-grid .time {
   background-color: #c4dff0;
   font-weight: bold;
-}
-
-.calendar-grid .appointment {
-  background-color: #add8e6;
-  margin: 5px;
-  padding: 5px;
-  text-align: center;
-  color: #000;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.calendar-grid .appointment.online {
-  background-color: #c0f7a1;
 }
 
 /* Weekday Header Styling */
