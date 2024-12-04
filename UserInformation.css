@@ -1,0 +1,61 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  /* Popup Window */
+  .popup-window {
+    background-color: #e0f7fa; /* Light blue color */
+    border: 1px solid #b0bec5; /* Light gray-blue border */
+    border-radius: 10px;
+    width: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Title */
+  .popup-title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  /* User Name */
+  .user-name {
+    margin: 10px 0 20px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Change Password Button */
+  .change-password-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff; /* White background */
+    color: #00796b; /* Teal text */
+    border: 1px solid #00796b;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .change-password-button:hover {
+    background-color: #00796b;
+    color: #ffffff;
+  }
+  
+  /* Lock Icon */
+  .lock-icon {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+  
