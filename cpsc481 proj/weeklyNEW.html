@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full-Screen Scrollable Calendar</title>
+  <link rel="stylesheet" href="weekly.css">
+</head>
+<script src="weekly.js"></script>
+<body>
+  <div class="calendar-container">
+    <!-- Header -->
+    <div class="calendar-header">
+      <input type="text" placeholder="Search Patients..." class="search-bar">
+      <div class="filter-container">
+        <span>Filters:</span>
+        <select>
+          <option value="doctors">Doctors</option>
+        </select>
+        <div class="profile-icon">👤</div>
+      </div>
+    </div>
+
+    <!-- Tabs for View -->
+    <div class="tabs-header">
+      <div class="view-tabs">
+        <span class="tab active">DAILY</span>
+        <span class="tab">WEEKLY</span>
+        <span class="tab">MONTHLY</span>
+      </div>
+    </div>
+
+    <!-- Date Navigation -->
+    <div class="calendar-date">
+      <button class="arrow-btn">◀</button>
+      <span>Mon. Oct. 7 - Sun. Oct. 13, 2024</span>
+      <button class="arrow-btn">▶</button>
+    </div>
+
+    <!-- Scrollable Calendar Grid -->
+    <div class="calendar-grid">
+      <!-- Days of the Week Header -->
+      <div class="time">Date/Time</div>
+        <div class="time monday">Monday</div>
+        <div class="time tuesday">Tuesday</div>
+        <div class="time wednesday">Wednesday</div>
+        <div class="time thursday">Thursday</div>
+        <div class="time friday">Friday</div>
+        <div class="time saturday">Saturday</div>
+        <div class="time sunday">Sunday</div>
+
+
+      <!-- Time Slots -->
+      <div class="time">9:00 AM</div>
+      <div class="appointment empty monday9"></div>
+      <div class="appointment in-clinic tuesday9" data-title="Dr. Smith" data-time="9:00 AM - 10:00 AM" data-location="Room 203">
+        In-Clinic
+      </div>
+      <div class="appointment empty wednesday9"></div>
+      <div class="appointment empty thursday9"></div>
+      <div class="appointment empty friday9"></div>
+      <div class="appointment empty saturday9"></div>
+      <div class="appointment empty sunday9"></div>
+
+      <div class="time">10:00 AM</div>
+      <div class="appointment empty monday10"></div>
+      <div class="appointment online tuesday10"></div>
+      <div class="appointment empty wednesday10"></div>
+      <div class="appointment empty thursday10"></div>
+      <div class="appointment empty friday10"></div>
+      <div class="appointment empty saturday10"></div>
+      <div class="appointment empty sunday10"></div>
+
+      <div class="time">11:00 AM</div>
+      <div class="appointment empty monday11"></div>
+      <div class="appointment empty tuesday11"></div>
+      <div class="appointment empty wednesday11"></div>
+      <div class="appointment in-clinic thursday11"></div>
+      <div class="appointment in-clinic friday11"></div>
+      <div class="appointment empty saturday11"></div>
+      <div class="appointment empty sunday11"></div>
+
+      <div class="time">12:00 PM</div>
+      <div class="appointment empty monday12"></div>
+      <div class="appointment empty tuesday12"></div>
+      <div class="appointment empty wednesday12"></div>
+      <div class="appointment empty thursday12"></div>
+      <div class="appointment empty friday12"></div>
+      <div class="appointment empty saturday12"></div>
+      <div class="appointment empty sunday12"></div>
+
+      <!-- Add time slots up to 6:00 PM -->
+      <div class="time">1:00 PM</div>
+      <div class="appointment empty monday13"></div>
+      <div class="appointment empty tuesday13"></div>
+      <div class="appointment empty wednesday13"></div>
+      <div class="appointment empty thursday13"></div>
+      <div class="appointment empty friday13"></div>
+      <div class="appointment empty saturday13"></div>
+      <div class="appointment empty sunday13"></div>
+
+      <div class="time">2:00 PM</div>
+      <div class="appointment empty monday14"></div>
+      <div class="appointment empty tuesday14"></div>
+      <div class="appointment empty wednesday14"></div>
+      <div class="appointment empty thursday14"></div>
+      <div class="appointment empty friday14"></div>
+      <div class="appointment empty saturday14"></div>
+      <div class="appointment empty sunday14"></div>
+
+      <div class="time">3:00 PM</div>
+      <div class="appointment empty monday15"></div>
+      <div class="appointment empty tuesday15"></div>
+      <div class="appointment empty wednesday15"></div>
+      <div class="appointment empty thursday15"></div>
+      <div class="appointment empty friday15"></div>
+      <div class="appointment empty saturday15"></div>
+      <div class="appointment empty sunday15"></div>
+
+      <div class="time">4:00 PM</div>
+      <div class="appointment empty monday16"></div>
+      <div class="appointment empty tuesday16"></div>
+      <div class="appointment empty wednesday16"></div>
+      <div class="appointment empty thursday16"></div>
+      <div class="appointment empty friday16"></div>
+      <div class="appointment empty saturday16"></div>
+      <div class="appointment empty sunday16"></div>
+
+      <div class="time">5:00 PM</div>
+      <div class="appointment empty monday17"></div>
+      <div class="appointment empty tuesday17"></div>
+      <div class="appointment empty wednesday17"></div>
+      <div class="appointment empty thursday17"></div>
+      <div class="appointment empty friday17"></div>
+      <div class="appointment empty saturday17"></div>
+      <div class="appointment empty sunday17"></div>
+
+      <div class="time">6:00 PM</div>
+      <div class="appointment empty monday18"></div>
+      <div class="appointment empty tuesday18"></div>
+      <div class="appointment empty wednesday18"></div>
+      <div class="appointment empty thursday18"></div>
+      <div class="appointment empty friday18"></div>
+      <div class="appointment empty saturday18"></div>
+      <div class="appointment empty sunday18"></div>
+    </div>
+  </div>
+</body>
+</html>
