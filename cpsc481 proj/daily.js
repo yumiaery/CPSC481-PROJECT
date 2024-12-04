@@ -78,12 +78,17 @@ function calculateEndTime(startTime) {
   let endHour = parseInt(hour) + 1;
   let endPeriod = period;
 
-  // Handle transitions for 12 PM and 12 AM
-  if (endHour === 12) {
-    endPeriod = period; // Stay in the same period (PM/AM)
+  // Handle transitions for 12-hour format
+  if (hour === "12") {
+    // At 12, switch AM/PM
+    endPeriod = period === "AM" ? "PM" : "AM";
+    endHour = 1; // Wrap to 1
+  } else if (endHour === 12) {
+    // Transition period at 12
+    endPeriod = period === "AM" ? "PM" : "AM";
   } else if (endHour > 12) {
-    endHour -= 12; // Wrap around after 12
-    endPeriod = period === "AM" ? "PM" : "AM"; // Switch AM/PM
+    // Wrap hours beyond 12 back to 1
+    endHour -= 12;
   }
 
   return `${endHour}:${minutes} ${endPeriod}`;
