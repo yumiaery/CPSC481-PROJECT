@@ -35,7 +35,7 @@
   }
   
   .calendar-header .search-bar {
-    width: 60%; /* Adjusted size for daily view */
+    width: 30%; /* Adjusted size for daily view */
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
