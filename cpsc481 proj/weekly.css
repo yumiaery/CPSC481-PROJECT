@@ -145,3 +145,261 @@ body {
   background-color: #ccc;
   border-radius: 4px;
 }
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Window */
+.popup-window {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-window h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.popup-window .close-btn {
+  margin-top: 15px;
+  padding: 5px 10px;
+  border: none;
+  background: #f44336;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* General Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.appointment-form-container {
+  background-color: #e0f7fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  padding: 20px;
+  position: relative;
+}
+
+/* Header */
+.appointment-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Form Fields */
+form label {
+  display: block;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form input[readonly] {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+/* Time Input Styling */
+.time-inputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.time-inputs input {
+  width: calc(50% - 5px);
+}
+
+/* Notes Section */
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reschedule-btn {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 45%;
+  cursor: pointer;
+}
+
+.cancel-appointment-btn {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 45%;
+  cursor: pointer;
+}
+
+/* Container for the radio buttons */
+.radio-buttons {
+  margin-top: 20px;
+  margin-bottom: 20px; /* Space between radio buttons and other buttons */
+  display: flex; /* Ensure radio buttons are displayed in a row */
+  align-items: center; /* Vertically center align the radio buttons and labels */
+  white-space: nowrap; /* Prevent wrapping of radio buttons and labels */  }
+
+/* Style for the label text */
+.label-text {
+  position: relative;
+  right: 47px; /* Space between the label and the next radio button */
+  top: -5px;
+}
+  
+.confirm-btn:hover {
+  background-color: #004d40;
+}
+
+.cancel-btn:hover {
+  background-color: #004d40;
+}
+
+.input-container {
+  position: relative; /* Allows absolute positioning of the edit button inside it */
+  display: flex;
+  align-items: center;
+  width: 95%;
+  margin-bottom: 0px;
+}
+
+.input-container input {
+  width: 100%; /* Ensures the input takes up the container space */
+  padding-right: 35px; /* Space for the edit button */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-btn {
+  position: absolute; /* Position the button inside the input container */
+  right: -25px; /* Aligns the button to the right */
+  top: 35%; /* Centers the button vertically */
+  transform: translateY(-50%); /* Adjusts vertical alignment */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em; /* Adjust the size of the edit button */
+}
+
+.input-container .search-btn:hover {
+  color: #000;
+}
+
+/* Container for the textarea and the edit button */
+.textarea-container {
+display: flex; /* Align items horizontally */
+align-items: flex-start; /* Aligns textarea and button at the top */
+gap: 10px; /* Space between the textarea and the button */
+position: relative; /* Keeps child elements positioned inside the container */
+width: 95%;
+}
+
+/* Textarea styling */
+.textarea-container textarea {
+flex: 1; /* Allows the textarea to take up remaining space */
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+resize: none; /* Optional: Prevents resizing */
+}
+
+.popup-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+  background-color: #999;
+}
