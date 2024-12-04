@@ -127,6 +127,15 @@ body {
   border-radius: 5px;
 }
 
+.calendar-grid .appointment.empty {
+  background-color: #fff;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  color: #000;
+  border-radius: 5px;
+}
+
 .calendar-grid .appointment.online {
   background-color: #c0f7a1;
 }
