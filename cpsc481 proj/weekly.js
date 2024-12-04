@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   popupOverlay.style.display = 'none'; // Initially hidden
   document.body.appendChild(popupOverlay);
 
-  let currentAppointment = null; // To store the clicked appointment element
+  let currentAppointment = null;
 
   // Define popup content for appointment details
   const appointmentDetailsContent = `
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <label for="notes">Notes:</label>
           <textarea id="notes" readonly></textarea>
           <div class="form-buttons">
-            <button type="submit" class="reschedule-btn">Reschedule</button>
+            <button type="button" class="reschedule-btn">Reschedule</button>
             <button type="button" class="cancel-appointment-btn">Cancel Appointment</button>
           </div>
         </form>
@@ -37,12 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   `;
 
-  // Access appointment details when an appointment is clicked
+  // Loop through all appointments and disable empty ones
   appointments.forEach((appointment) => {
-    appointment.addEventListener('click', () => {
-      currentAppointment = appointment; // Save the clicked appointment
-      showAppointmentDetails(appointment);
-    });
+    if (!appointment.classList.contains('in-clinic') && !appointment.classList.contains('online')) {
+      // Make empty slots unclickable
+      appointment.style.pointerEvents = 'none';
+    } else {
+      // Add click event for booked slots only
+      appointment.addEventListener('click', () => {
+        currentAppointment = appointment; // Save the clicked appointment
+        showAppointmentDetails(appointment);
+      });
+    }
   });
 
   // Function to show appointment details
@@ -56,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('appointment-time').value = appointment.getAttribute('data-time');
     document.getElementById('doctor-name').value = appointment.getAttribute('data-doctor-name');
     document.getElementById('appointment-type').value = appointment.getAttribute('data-type');
-    document.getElementById('notes').value = appointment.getAttribute('data-notes');
+
+
 
     // Close button functionality
     popupOverlay.querySelector('.close-btn').addEventListener('click', () => {
@@ -66,6 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cancel appointment button functionality
     popupOverlay.querySelector('.cancel-appointment-btn').addEventListener('click', () => {
       showCancelConfirmation();
+    });
+
+    // Reschedule button functionality
+    popupOverlay.querySelector('.reschedule-btn').addEventListener('click', () => {
+      rescheduleAppointment();
     });
   }
 
@@ -92,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showAppointmentDetails(currentAppointment); // Show the appointment details again
       }
     });
+
     popupOverlay.querySelector('.close-btn').addEventListener('click', () => {
       popupOverlay.style.display = 'none';
     });
@@ -109,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAppointment.removeAttribute(attr.name);
           }
         });
+        currentAppointment.style.pointerEvents = 'none'; // Disable clicking
       }
 
       // Show cancellation success message
@@ -128,6 +142,120 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+// Function to handle reschedule
+// Assuming this function is triggered when the "Reschedule" button is clicked
+function rescheduleAppointment() {
+  const rescheduleContent = `
+    <div class="appointment-form-container">
+      <div class="appointment-form">
+        <h2>Reschedule Appointment</h2>
+        <div>
+          <label for="new-date">Select New Date:</label>
+          <select id="new-date">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
+        </div>
+        <div>
+          <label for="new-time">Select New Time:</label>
+          <select id="new-time">
+            <option value="9AM-10AM">9AM-10AM</option>
+            <option value="10AM-11AM">10AM-11AM</option>
+            <option value="11AM-12PM">11AM-12PM</option>
+            <option value="12PM-1PM">12PM-1PM</option>
+            <option value="1PM-2PM">1PM-2PM</option>
+            <option value="2PM-3PM">2PM-3PM</option>
+            <option value="3PM-4PM">3PM-4PM</option>
+            <option value="4PM-5PM">4PM-5PM</option>
+            <option value="5PM-6PM">5PM-6PM</option>
+            <option value="6PM-7PM">6PM-7PM</option>
+          </select>
+        </div>
+        <div>            
+          <label for="new-type">Select Appointment Type:</label>
+          <select id="new-type">
+            <option value="online">Online</option>
+            <option value="in-clinic">In-Clinic</option>
+          </select>
+        </div>           
+        <div class="popup-buttons">
+          <button class="btn-secondary" id="cancel-reschedule">Cancel</button>
+          <button class="btn-primary" id="confirm-reschedule">Reschedule</button>
+        </div>
+        <button class="close-btn">✖</button>
+      </div>
+    </div>
+  `;
+  popupOverlay.innerHTML = rescheduleContent;
+
+  // Handle Reschedule button click
+  document.getElementById('confirm-reschedule').addEventListener('click', () => {
+    const newDate = document.getElementById('new-date').value;
+    const newTime = document.getElementById('new-time').value;
+    const newType = document.getElementById('new-type').value;
+
+    if (newDate && newTime && newType) {
+      const oldDate = currentAppointment.classList[1]; // e.g., 'tuesday9'
+      const oldTime = currentAppointment.getAttribute('data-time'); // e.g., '9:00 AM - 10:00 AM'
+
+      const formattedOldTime = oldTime.replace(/:/g, '').replace(/ /g, '').replace('AM', 'am').replace('PM', 'pm');
+      const oldSlotClass = oldDate + formattedOldTime.toLowerCase();
+
+      // Remove the current appointment from the old slot
+      currentAppointment.classList.remove(oldSlotClass);
+      currentAppointment.classList.add('empty');
+      currentAppointment.innerHTML = '';
+
+      // Format new time string
+      const newTimeParts = newTime.split('-');
+      const hour = newTimeParts[0].replace(/\D/g, '').toLowerCase(); // Extract the hour from newTime (e.g., '9')
+
+      // Format the new slot class
+      const newSlotClass = `${newType} ${newDate}${hour}am`;
+
+      // Find the new appointment slot
+      const newAppointment = document.querySelector(`.appointment.${newDate}${hour}am`);
+
+      if (newAppointment) {
+        newAppointment.classList.remove('empty');
+        newAppointment.classList.add(newType);
+        newAppointment.setAttribute('data-title', currentAppointment.getAttribute('data-title'));
+        newAppointment.setAttribute('data-time', newTime);
+        newAppointment.setAttribute('data-location', currentAppointment.getAttribute('data-location'));
+        newAppointment.innerHTML = `${newType.charAt(0).toUpperCase() + newType.slice(1)}`;
+      }
+
+      // Close the popup and show success message
+      popupOverlay.innerHTML = `
+        <div class="appointment-form-container">
+          <div class="appointment-form">
+            <h2>Reschedule Successful</h2>
+            <p>The appointment has been successfully rescheduled.</p>
+            <button class="close-btn">✖</button>
+          </div>
+        </div>
+      `;
+
+      popupOverlay.querySelector('.close-btn').addEventListener('click', () => {
+        popupOverlay.style.display = 'none';
+      });
+    } else {
+      alert('Please fill all the fields');
+    }
+  });
+}
+
+
+
+
+
+
 
   // Close popup when clicking outside the content
   popupOverlay.addEventListener('click', (e) => {
