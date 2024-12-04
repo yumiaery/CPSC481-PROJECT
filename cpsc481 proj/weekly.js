@@ -98,6 +98,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle "Yes" button click
     document.getElementById('yes-button').addEventListener('click', () => {
+      if (currentAppointment) {
+        // Change the class of the appointment to appointment-empty
+        currentAppointment.classList.remove('in-clinic', 'online'); // Remove any existing appointment types
+        currentAppointment.classList.add('empty'); // Add the empty class
+        currentAppointment.innerHTML = ''; // This will clear the content inside the div
+        // Remove all attributes
+        Array.from(currentAppointment.attributes).forEach(attr => {
+          if (attr.name !== 'class') { // Exclude the 'class' attribute
+            currentAppointment.removeAttribute(attr.name);
+          }
+        });
+      }
+
+      // Show cancellation success message
       popupOverlay.innerHTML = `
         <div class="appointment-form-container">
           <div class="appointment-form">
