@@ -10,15 +10,25 @@
   <div class="calendar-container">
     <!-- Header -->
     <div class="calendar-header">
-      <input type="text" placeholder="Search Patients..." class="search-bar">
+      <div class="search-container">
+        <input type="text" placeholder="Search Patients..." class="search-bar" id="searchInput">
+        <div id="searchResults" class="search-results"></div>
+      </div>
       <div class="filter-container">
         <span>Filters:</span>
         <select>
           <option value="doctors">Doctors</option>
         </select>
-        <div class="profile-icon">👤</div>
+        <div class="profile-dropdown">
+          <button class="profile-icon">👤</button>
+          <div id="profileMenu">
+            <a href="#user-info">User Information</a>
+            <a href="#logout">Logout</a>
+          </div>
+        </div>
       </div>
     </div>
+    
 
     <!-- Tabs for View -->
     <div class="tabs-header">
