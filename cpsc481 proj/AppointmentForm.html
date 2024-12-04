@@ -59,35 +59,7 @@
       </form>
     </div>
   </div>
-  <script>
-    // Parse query parameters
-    const params = new URLSearchParams(window.location.search);
-    const date = params.get("date");
-    const time = params.get("time");
-    const endTime = params.get("endTime");
-    const appointment = params.get("appointment");
-  
-    // Populate the form fields
-    document.getElementById("appointment-date").value = date || "";
-    document.getElementById("start-time").value = time || "";
-    document.getElementById("end-time").value = endTime || ""; // Add this line
-
-    if (appointment) {
-      try {
-        const appointmentData = JSON.parse(decodeURIComponent(appointment));
-        document.getElementById("patient-name").value = appointmentData.name || "";
-        document.getElementById("notes").value = appointmentData.notes || "";
-      } catch (error) {
-        console.error("Error parsing appointment data:", error);
-      }
-    }
-  
-    // Close the form
-    document.querySelector(".close-btn").addEventListener("click", () => {
-      window.parent.postMessage({ action: "close" }, "*");
-    });
-  </script>
-  
+  <script src="AppointmentForm.js"></script>
 </body>
 </html>
 
