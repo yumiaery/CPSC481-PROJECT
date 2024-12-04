@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monthly Calendar View</title>
+  <title>CalgaryCare</title>
   <link rel="stylesheet" href="monthly.css">
+  <link rel="stylesheet" href="profile.css">
 </head>
 <body>
   <div class="calendar-container">
@@ -28,7 +29,14 @@
         <select>
           <option value="doctors">Doctors</option>
         </select>
-        <div class="profile-icon">👤</div>
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <button class="profile-icon">👤</button>
+          <div id="profileMenu">
+            <a href="#user-info">User Information</a>
+            <a href="#logout">Logout</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -106,6 +114,7 @@
       <div class="day-cell"><span class="date">31</span> <div class="appointment doctor2"></div></div>
     </div>
   </div>
+  <script src="profile.js"></script>
   <script src="navigation.js"></script>
 </body>
 </html>

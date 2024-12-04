@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full-Screen Scrollable Calendar</title>
-  <link rel="stylesheet" href="weekly.css"> <!-- Link to the external CSS -->
+  <title>CalgaryCare</title>
+  <link rel="stylesheet" href="weekly.css">
+  <link rel="stylesheet" href="profile.css">
 </head>
 <body>
   <div class="calendar-container">
@@ -17,7 +18,14 @@
         <select>
           <option value="doctors">Doctors</option>
         </select>
-        <div class="profile-icon">👤</div>
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <button class="profile-icon">👤</button>
+          <div id="profileMenu">
+            <a href="#user-info">User Information</a>
+            <a href="#logout">Logout</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -144,7 +152,7 @@
   </div>
 
   <!-- Link to external JavaScript file -->
-  <script src="weekly.js"></script>
+  <script src="profile.js"></script>
   <script src="navigation.js"></script>
 </body>
 </html>
