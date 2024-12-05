@@ -155,6 +155,10 @@ body {
   border-right: 2px solid #000000;
   padding: 10px;
   position: relative;
+  height: auto;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start;
 }
 
 .day-cell .date {
@@ -164,62 +168,13 @@ body {
   left: 5px;
 }
 
-/* General Appointment Block Styling */
-.appointment {
-  background-color: #add8e6;
-  padding: 0 5px; /* Horizontal padding for flex alignment */
-  text-align: left; /* Align text to the left within flex layout */
-  color: #000;
-  border-radius: 5px;
-  width: 95%; /* Adjust width to fit within the day cell */
-  height: 20px; /* Fixed height for all blocks */
-  display: flex; /* Use flexbox */
-  justify-content: space-between; /* Align text horizontally */
-  align-items: center; /* Center content vertically */
-  overflow: hidden; /* Prevent text overflow */
-  font-size: 0.7rem; /* Uniform font size */
-  line-height: 1; /* Tighter spacing */
-  position: absolute; /* Position it inside the day cell */
-  right: 2%; /* Shift it to the left to center it */
-  margin-top: 15px;
-  margin-left: 5px;
-  margin-right: 1px;
-}
-
-/* Appointment Blocks by Doctor */
-.appointment.doctor1 {
-  background-color: #b2afed;
-}
-
-.appointment.doctor2 {
-  background-color: #ebada9;
-}
-
-.appointment.doctor3 {
-  background-color: #a9ebdb;
-}
-
-/* Styling Individual Details */
-.appointment .patient-name {
-  font-weight: bold; /* Highlight patient name */
-  white-space: nowrap; /* Prevent wrapping */
-  overflow: hidden; /* Prevent overflow */
-  text-overflow: ellipsis; /* Add ellipsis for long names */
-}
-
-.appointment .doctor-name {
-  font-style: italic; /* Italicize doctor name */
-  color: rgb(52, 46, 46); /* Subtle color difference */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.appointment .appointment-time {
-  color: #5c5c5c; /* Subtle color */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Ensure appointments stack neatly */
+/* Ensure appointments stack neatly within the day cell */
+.appointments {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between appointment buttons */
+  overflow-y: auto;
 }
 
 /* Appointment Button Styling */

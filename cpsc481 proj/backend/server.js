@@ -45,6 +45,7 @@ app.post("/appointments", (req, res) => {
   );
 });
 
+//retrieve appointments for daily view
 app.get("/appointments", (req, res) => {
   const { date } = req.query;
 
@@ -59,6 +60,7 @@ app.get("/appointments", (req, res) => {
   });
 });
 
+//retrieve appointment for weely view
 app.get("/appointmentsWeekly", (req, res) => {
   const { start_date, end_date } = req.query;
 
@@ -67,6 +69,48 @@ app.get("/appointmentsWeekly", (req, res) => {
     if (err) {
       console.error("Error fetching weekly appointments:", err);
       res.status(500).send("Error retrieving weekly appointments.");
+    } else {
+      res.send(results);
+    }
+  });
+});
+
+//retrieve appointments for monthly view
+const monthMap = {
+  January: "01",
+  February: "02",
+  March: "03",
+  April: "04",
+  May: "05",
+  June: "06",
+  July: "07",
+  August: "08",
+  September: "09",
+  October: "10",
+  November: "11",
+  December: "12",
+};
+
+app.get("/appointmentsMonthly", (req, res) => {
+  const { month, year } = req.query;
+
+  console.log("Month:", month, "Year:", year);
+
+  // Get the numerical representation of the month
+  const monthNumber = monthMap[month];
+
+  // Calculate start and end dates
+  const startDate = `${year}-${monthNumber}-01`;
+  const endDate = `${year}-${monthNumber}-31`; // Handles all months (SQL will correct overflows)
+
+  console.log("Start Date:", startDate, "End Date:", endDate);
+  
+  // SQL Query for date range
+  const sql = "SELECT * FROM appointments WHERE appointment_date >= ? AND appointment_date <= ?";
+  db.query(sql, [startDate, endDate], (err, results) => {
+    if (err) {
+      console.error("Error fetching monthly appointments:", err);
+      res.status(500).send("Error retrieving monthly appointments.");
     } else {
       res.send(results);
     }

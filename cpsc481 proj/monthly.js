@@ -18,8 +18,7 @@ const hardcodedCalendars = {
     "February 2025": { firstDay: 6, daysInMonth: 28 }
   };
   
-  // Render the calendar
-  function renderCalendar(monthYear) {
+  async function renderCalendar(monthYear) {
     const calendarGrid = document.querySelector(".calendar-grid.monthly");
     const monthLabel = document.querySelector(".calendar-date span");
   
@@ -49,10 +48,22 @@ const hardcodedCalendars = {
       calendarGrid.innerHTML += `<div class="day-cell"></div>`;
     }
   
-    // Add days
+    // Add day cells
     for (let day = 1; day <= daysInMonth; day++) {
-      calendarGrid.innerHTML += `<div class="day-cell"><span class="date">${day}</span></div>`;
+      const date = new Date(`${monthYear.split(" ")[0]} ${day}, ${monthYear.split(" ")[1]}`)
+        .toISOString()
+        .split("T")[0];
+  
+      calendarGrid.innerHTML += `
+        <div class="day-cell" data-date="${date}">
+          <span class="date">${day}</span>
+          <div class="appointments"></div>
+        </div>
+      `;
     }
+  
+    // Fetch and render appointments
+    await renderAppointmentsMonthly();
   }
   
   // Navigation logic
@@ -88,6 +99,74 @@ const hardcodedCalendars = {
       }
     });
   });
+  
+  async function fetchMonthlyAppointments(month, year) {
+    try {
+      const response = await fetch(`http://localhost:3000/appointmentsMonthly?month=${month}&year=${year}`);
+      if (!response.ok) throw new Error("Failed to fetch monthly appointments");
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching monthly appointments:", error);
+      return [];
+    }
+  }
+
+  async function renderAppointmentsMonthly() {
+    const calendarGrid = document.querySelector(".calendar-grid");
+  
+    // Get the current month and year from the view
+    const monthLabel = document.querySelector(".calendar-date span").textContent; // e.g., "December 2024"
+    const [month, year] = monthLabel.split(" ");
+  
+    const appointments = await fetchMonthlyAppointments(month, year);
+
+    // Map appointments to the corresponding day cells
+    appointments.forEach((appointment) => {
+      
+      const appointmentDate = new Date(appointment.appointment_date).toISOString().split("T")[0];
+
+      const dayCell = calendarGrid.querySelector(`.day-cell[data-date="${appointmentDate}"]`);
+  
+
+      if (dayCell) {
+        console.log("Found matching day cell:", dayCell);
+        const appointmentsContainer = dayCell.querySelector(".appointments");
+  
+        const appointmentButton = document.createElement("button");
+        appointmentButton.classList.add("appointment-button");
+        appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
+  
+        // Add click event to open the appointment form
+        appointmentButton.addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent triggering the day cell handler
+          openAppointmentForm({
+            ...appointment,
+          });
+        });
+  
+        appointmentsContainer.appendChild(appointmentButton);
+      } else {
+        console.error("No matching day cell found for appointment date:", appointment.appointment_date);
+      }
+    });
+  }
+  
+  function openAppointmentForm(appointment = {}) {
+    const iframe = document.querySelector(".appointment-form-iframe");
+    const popupOverlay = document.querySelector(".popup-overlay");
+    const appointmentFormContainer = document.querySelector(".appointment-form-container");
+  
+    const query = new URLSearchParams({
+      date: appointment.appointment_date || "",
+      time: appointment.start_time || "",
+      endTime: appointment.end_time || "",
+      doctor: appointment.doctor_name || "",
+    });
+  
+    iframe.src = `AppointmentForm.html?${query.toString()}`;
+    appointmentFormContainer.style.display = "block";
+    popupOverlay.style.display = "block";
+  }
   
   
   
