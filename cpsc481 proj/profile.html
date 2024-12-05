@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info Popup</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <button id="open-popup" class="button">Show User Info</button>
+
+    <!-- Popup Window -->
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <!-- Close Icon (X) -->
+            <button id="close-popup" class="close-icon">&times;</button>
+            <h1>Profile</h1>
+            <p><span id="user-name">Guest</span></p>
+            <button id="change-password" class="button">
+                <span class="lock-icon">🔒</span> Change Password
+            </button>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

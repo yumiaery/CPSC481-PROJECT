@@ -1,42 +1,28 @@
-// Function to handle click events on appointment slots
-function handleClick(element) {
-  // Check if the appointment is already selected
-  if (element.classList.contains('selected')) {
-    // If it's already selected, remove the selection
-    element.classList.remove('selected');
-  } else {
-    // If it's not selected, add the selection
-    element.classList.add('selected');
-  }
-}
+// JavaScript to handle the popup behavior
+document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("popup");
+    const openPopupButton = document.getElementById("open-popup");
+    const closePopupButton = document.getElementById("close-popup");
+    const userName = document.getElementById("user-name");
 
-// Function to toggle dropdown menu visibility
-function toggleDropdown() {
-  const menu = document.getElementById('profileMenu');
-  menu.classList.toggle('open'); // Toggle the "open" class
-}
+    // Example: Dynamically set the user's name
+    const userData = "David (Last Name)"; // Replace with actual dynamic user data
+    userName.textContent = userData;
 
-// Close the dropdown when clicking outside
-function closeDropdownOnClickOutside(event) {
-  // Ensure the target is not the dropdown button or menu
-  if (!event.target.closest('.profile-dropdown')) {
-    const dropdown = document.getElementById('profileMenu');
-    if (dropdown && dropdown.classList.contains('open')) {
-      dropdown.classList.remove('open'); // Remove the "open" class
-    }
-  }
-}
+    // Open popup
+    openPopupButton.addEventListener("click", () => {
+        popup.classList.remove("hidden");
+    });
 
-// Add event listener for profile button
-document.addEventListener('DOMContentLoaded', () => {
-  const profileButton = document.querySelector('.profile-icon');
-  if (profileButton) {
-    profileButton.addEventListener('click', toggleDropdown);
-  }
+    // Close popup
+    closePopupButton.addEventListener("click", () => {
+        popup.classList.add("hidden");
+    });
+
+    // Optional: Close the popup when clicking outside the content box
+    popup.addEventListener("click", (event) => {
+        if (event.target === popup) {
+            popup.classList.add("hidden");
+        }
+    });
 });
-
-// Add global event listener for clicks outside the dropdown
-window.addEventListener('click', closeDropdownOnClickOutside);
-
-// Add functionality for other future interactive elements here
-  
