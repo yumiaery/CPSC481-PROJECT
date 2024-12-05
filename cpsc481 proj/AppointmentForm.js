@@ -10,6 +10,11 @@ document.getElementById("appointment-date").value = date || "";
 document.getElementById("start-time").value = time || "";
 document.getElementById("end-time").value = endTime || ""; // Add this line
 
+function formatTime(inputTime) {
+  const date = new Date(`1970-01-01T${inputTime}`);
+  return date.toTimeString().split(" ")[0]; // 'HH:MM:SS'
+}
+
 if (appointment) {
   try {
     const appointmentData = JSON.parse(decodeURIComponent(appointment));
@@ -77,3 +82,46 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// saving a appointment.
+document.querySelector(".confirm-btn").addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent form submission
+
+  // Gather data from the form
+  const patientName = document.getElementById("patient-name").value;
+  const appointmentDate = document.getElementById("appointment-date").value;
+  const startTime = document.getElementById("start-time").value;
+  const endTime = document.getElementById("end-time").value;
+  const doctorName = document.getElementById("doctor-name").value;
+  const notes = document.getElementById("notes").value;
+  const appointmentType = document.getElementById("appointment-type").value;
+  console.log(patientName)
+
+  // Send the appointment data to the backend
+  fetch("http://localhost:3000/appointments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      patient_name: patientName,
+      appointment_date: new Date(appointmentDate).toISOString().split("T")[0],
+      start_time: startTime,
+      end_time: endTime,
+      doctor_name: doctorName,
+      notes: notes,
+      appointment_type: appointmentType,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("Appointment saved successfully!");
+        window.parent.postMessage({ action: "close" }, "*"); // Close the form
+      } else {
+        alert("Failed to save appointment.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An error occurred while saving the appointment.");
+    });
+});

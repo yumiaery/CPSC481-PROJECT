@@ -15,10 +15,10 @@ let currentDate = (() => {
 // Function to format the date as "Day, Month Date, Year"
 function formatDate(date) {
   return date.toLocaleDateString("en-US", {
-    weekday: "long",  // e.g., "Monday"
-    month: "long",    // e.g., "September"
-    day: "numeric",   // e.g., "2"
-    year: "numeric",  // e.g., "2024"
+    weekday: "long", // e.g., "Monday"
+    month: "long", // e.g., "September"
+    day: "numeric", // e.g., "2"
+    year: "numeric", // e.g., "2024"
   });
 }
 
@@ -36,21 +36,104 @@ function getWeekRange(date) {
 }
 
 function syncWeeklyView() {
-  const weekRange = getWeekRange(currentDate);
   const weeklyURL = `weekly.html?date=${currentDate.toISOString().split("T")[0]}`;
-  document.querySelector(".view-tabs .tab:nth-child(2)").onclick = () => (window.location.href = weeklyURL);
+  document.querySelector(".view-tabs .tab:nth-child(2)").onclick = () =>
+    (window.location.href = weeklyURL);
 }
 
 function syncMonthlyView() {
   const monthlyURL = `monthly.html?date=${currentDate.toISOString().split("T")[0]}`;
-  document.querySelector(".view-tabs .tab:nth-child(3)").onclick = () => (window.location.href = monthlyURL);
+  document.querySelector(".view-tabs .tab:nth-child(3)").onclick = () =>
+    (window.location.href = monthlyURL);
 }
 
+// Normalize time format (e.g., "9:00 am" -> "9:00 AM")
+function normalizeTime(time) {
+  const [hour, minutePart] = time.split(":");
+  const [minutes, period] = minutePart.trim().split(" ");
+  const normalizedPeriod = period.toUpperCase(); // Convert "am"/"pm" to "AM"/"PM"
+  return `${hour}:${minutes} ${normalizedPeriod}`;
+}
+
+// Fetch appointments for the selected date
+async function fetchAppointments(date) {
+  try {
+    const response = await fetch(`http://localhost:3000/appointments?date=${date}`);
+    if (!response.ok) throw new Error("Failed to fetch appointments");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    return [];
+  }
+}
+
+// Render appointments as buttons in the calendar grid
+async function renderAppointments() {
+  const formattedDate = currentDate.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+  const appointments = await fetchAppointments(formattedDate);
+
+  // Clear existing buttons in all slots
+  const slots = document.querySelectorAll(".calendar-grid > div:nth-child(even)");
+  slots.forEach((slot) => {
+    slot.innerHTML = ""; // Clear all time slots
+    slot.addEventListener("click", () => openAppointmentForm({}));
+  });
+
+  // Map appointments to time slots
+  appointments.forEach((appointment) => {
+    const normalizedTime = normalizeTime(appointment.start_time); // Normalize the time format
+    const timeSlot = [...document.querySelectorAll(".calendar-grid .time")].find(
+      (timeDiv) => timeDiv.textContent.trim() === normalizedTime
+    );
+
+    if (timeSlot && timeSlot.nextElementSibling) {
+      const slot = timeSlot.nextElementSibling;
+      const appointmentButton = document.createElement("button");
+      appointmentButton.classList.add("appointment-button");
+      appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
+
+      // Add click event to the button
+      appointmentButton.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevent the parent slot's click handler
+        openAppointmentForm(appointment);
+      });
+
+      slot.appendChild(appointmentButton);
+    }
+  });
+}
+
+// Open appointment form in the iframe
+function openAppointmentForm(appointment) {
+  const iframe = document.querySelector(".appointment-form-iframe");
+  const popupOverlay = document.querySelector(".popup-overlay");
+  const appointmentFormContainer = document.querySelector(".appointment-form-container");
+
+  const query = new URLSearchParams({
+    date: appointment?.appointment_date || currentDate.toISOString().split("T")[0],
+    time: appointment?.start_time || "",
+    endTime: appointment?.end_time || "",
+    doctor: appointment?.doctor_name || "",
+  });
+
+  iframe.src = `AppointmentForm.html?${query.toString()}`;
+  appointmentFormContainer.style.display = "block";
+  popupOverlay.style.display = "block";
+}
+
+// Close popup
+function closePopup() {
+  document.querySelector(".appointment-form-container").style.display = "none";
+  document.querySelector(".popup-overlay").style.display = "none";
+  document.querySelector(".appointment-form-iframe").src = "";
+}
+
+document.querySelector(".popup-overlay").addEventListener("click", closePopup);
 
 function renderDay() {
   const dayLabel = document.querySelector(".calendar-date span");
   dayLabel.textContent = formatDate(currentDate);
-  syncWeeklyView(); // Ensure weekly view syncs with the current date
+  renderAppointments(); // Fetch and render appointments for the selected day
 }
 
 // Function to navigate to the previous or next day
@@ -61,92 +144,17 @@ function navigateDay(direction) {
     currentDate.setDate(currentDate.getDate() - 1); // Go to the previous day
   }
   renderDay();
-  syncWeeklyView(); // Sync weekly view link
-  syncMonthlyView();
 }
-
-// Function to calculate end time (add 1 hour to start time)
-function calculateEndTime(startTime) {
-  const [hour, minutePart] = startTime.split(":");
-  const [minutes, period] = minutePart.split(" ");
-  let endHour = parseInt(hour) + 1;
-  let endPeriod = period;
-
-  // Handle transitions for 12-hour format
-if (endHour === 12) {
-  endPeriod = period === "AM" ? "PM" : "AM"; // Switch AM/PM at 12
-} else if (endHour > 12) {
-  endHour -= 12; // Wrap around after 12
-}
-
-// Ensure end period changes correctly for 11 AM/PM
-if (endHour === 1 && period === "PM") {
-  endPeriod = "AM"; // 11 PM to 12 AM
-} else if (endHour === 1 && period === "AM") {
-  endPeriod = "PM"; // 11 AM to 12 PM
-}
-
-  return `${endHour}:${minutes} ${endPeriod}`;
-}
-
-let selectedDoctor = ""; // Track the selected doctor
 
 // Attach event listeners for the navigation buttons and slots
 document.addEventListener("DOMContentLoaded", () => {
-  const doctorFilter = document.getElementById("doctorFilter");
-
-  // Update the selected doctor when the filter changes
-  doctorFilter.addEventListener("change", (event) => {
-    selectedDoctor = event.target.value;
-    console.log(`Selected Doctor: ${selectedDoctor}`);
-  });
-
   renderDay();
 
-  // Add navigation button listeners
-  document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () =>
-    navigateDay("backward")
-  );
-
-  document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () =>
-    navigateDay("forward")
-  );
-
-  // Handle time slot clicks
-  const calendarGrid = document.querySelector(".calendar-grid");
-  calendarGrid.addEventListener("click", (event) => {
-    const slot = event.target;
-
-    if (slot.previousElementSibling && slot.previousElementSibling.classList.contains("time")) {
-      const startTime = slot.previousElementSibling.textContent.trim();
-      const endTime = calculateEndTime(startTime);
-
-      // Show popup
-      document.querySelector(".appointment-form-container").style.display = "block";
-      document.querySelector(".popup-overlay").style.display = "block";
-
-      // Set iframe source with query parameters
-      const iframe = document.querySelector(".appointment-form-iframe");
-      iframe.src = `AppointmentForm.html?date=${currentDate.toISOString().split("T")[0]}&time=${startTime}&endTime=${endTime}&doctor=${encodeURIComponent(selectedDoctor)}`;
-
-    }
+  document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () => {
+    navigateDay("backward");
   });
 
-  // Close popup when clicking the overlay
-  document.querySelector(".popup-overlay").addEventListener("click", closePopup);
-
-  function closePopup() {
-    document.querySelector(".appointment-form-container").style.display = "none";
-    document.querySelector(".popup-overlay").style.display = "none";
-
-    // Clear iframe source
-    document.querySelector(".appointment-form-iframe").src = "";
-  }
-
-  window.addEventListener("message", (event) => {
-    if (event.data.action === "close") {
-      closePopup();
-    }
+  document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () => {
+    navigateDay("forward");
   });
 });
-
