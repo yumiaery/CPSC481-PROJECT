@@ -14,10 +14,16 @@
       <h2>Appointment Form</h2>
       <form>
         <!-- Patient Name -->
-        <label for="patient-name">Notes:</label>
-        <div class="patient-name">
+        <label for="patient-name">Patient Name:</label>
+        <!-- <div class="patient-name">
         </div>
-        <textarea id="patient-name" placeholder="Patient Name"></textarea>
+        <textarea id="patient-name" placeholder="Patient Name"></textarea> -->
+        <div class="input-container">
+          <input type="text" id="patient-name" placeholder="First Last">
+          <button type="button" class="search-btn">
+            🔍
+          </button>
+        </div>
         
         <!-- Appointment Date -->
         <label for="appointment-date">Appointment Date:</label>
@@ -33,7 +39,7 @@
         
         <!-- Doctor Name -->
         <label for="doctor-name">Doctor Name:</label>
-        <input type="text" id="doctor-name" value="Dr. David" readonly>
+        <input type="text" id="doctor-name" readonly>
         
         <!-- Appointment Type -->
         <label for="appointment-type">Appointment Type:</label>

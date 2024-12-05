@@ -9,7 +9,7 @@ let currentDate = (() => {
       return new Date(year, month - 1, day); // Safe parsing (Months are 0-based)
     }
   }
-  return new Date(2024, 11, 9); // Default to September 2, 2024
+  return new Date(2024, 11, 9); // Default to December 9, 2024
 })();
 
 // Function to format the date as "Day, Month Date, Year"
@@ -67,6 +67,22 @@ async function fetchAppointments(date) {
   }
 }
 
+function calculateEndTime(startTime) {
+  const [hour, minutePart] = startTime.split(":");
+  const [minutes, period] = minutePart.trim().split(" ");
+  let endHour = parseInt(hour) + 1; // Add one hour
+  let endPeriod = period;
+
+  // Handle AM/PM transitions
+  if (endHour === 12) {
+    endPeriod = period === "AM" ? "PM" : "AM"; // Switch at 12
+  } else if (endHour > 12) {
+    endHour -= 12; // Wrap back to 1 after 12 PM
+  }
+
+  return `${endHour}:${minutes} ${endPeriod}`;
+}
+
 // Render appointments as buttons in the calendar grid
 async function renderAppointments() {
   const formattedDate = currentDate.toISOString().split("T")[0]; // 'YYYY-MM-DD'
@@ -74,9 +90,29 @@ async function renderAppointments() {
 
   // Clear existing buttons in all slots
   const slots = document.querySelectorAll(".calendar-grid > div:nth-child(even)");
-  slots.forEach((slot) => {
-    slot.innerHTML = ""; // Clear all time slots
-    slot.addEventListener("click", () => openAppointmentForm({}));
+  const timeDivs = document.querySelectorAll(".calendar-grid .time");
+
+  slots.forEach((slot, index) => {
+    // Clear content without removing existing event listeners
+    slot.innerHTML = ""; 
+
+    // Remove existing event listener (if any) to avoid duplicates
+    const newSlot = slot.cloneNode(true);
+    slot.parentNode.replaceChild(newSlot, slot);
+
+    // Add click listener for empty slots
+    newSlot.addEventListener("click", () => {
+      const startTime = timeDivs[index].textContent.trim(); // Get the corresponding start time
+      const endTime = calculateEndTime(startTime); // Calculate the end time dynamically
+      const selectedDoctor = document.getElementById("doctorFilter").value || "No Doctor Selected";
+
+      // Open the appointment form for an empty slot
+      openAppointmentForm({
+        start_time: startTime,
+        end_time: endTime,
+        doctor_name: selectedDoctor, // Pass the selected doctor
+      });
+    });
   });
 
   // Map appointments to time slots
@@ -104,7 +140,7 @@ async function renderAppointments() {
 }
 
 // Open appointment form in the iframe
-function openAppointmentForm(appointment) {
+function openAppointmentForm(appointment = {}) {
   const iframe = document.querySelector(".appointment-form-iframe");
   const popupOverlay = document.querySelector(".popup-overlay");
   const appointmentFormContainer = document.querySelector(".appointment-form-container");
@@ -113,7 +149,7 @@ function openAppointmentForm(appointment) {
     date: appointment?.appointment_date || currentDate.toISOString().split("T")[0],
     time: appointment?.start_time || "",
     endTime: appointment?.end_time || "",
-    doctor: appointment?.doctor_name || "",
+    doctor: appointment?.doctor_name || "No Doctor Selected",
   });
 
   iframe.src = `AppointmentForm.html?${query.toString()}`;
@@ -129,6 +165,12 @@ function closePopup() {
 }
 
 document.querySelector(".popup-overlay").addEventListener("click", closePopup);
+
+window.addEventListener("message", (event) => {
+  if (event.data.action === "close") {
+    closePopup();
+  }
+});
 
 function renderDay() {
   const dayLabel = document.querySelector(".calendar-date span");
