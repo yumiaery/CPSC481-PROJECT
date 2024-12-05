@@ -59,6 +59,20 @@ app.get("/appointments", (req, res) => {
   });
 });
 
+app.get("/appointmentsWeekly", (req, res) => {
+  const { start_date, end_date } = req.query;
+
+  const sql = "SELECT * FROM appointments WHERE appointment_date BETWEEN ? AND ?";
+  db.query(sql, [start_date, end_date], (err, results) => {
+    if (err) {
+      console.error("Error fetching weekly appointments:", err);
+      res.status(500).send("Error retrieving weekly appointments.");
+    } else {
+      res.send(results);
+    }
+  });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

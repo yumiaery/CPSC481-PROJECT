@@ -35,6 +35,22 @@ function getWeekRange(date) {
   };
 }
 
+function calculateEndTime(startTime) {
+  const [hour, minutePart] = startTime.split(":");
+  const [minutes, period] = minutePart.trim().split(" ");
+  let endHour = parseInt(hour) + 1; // Add one hour
+  let endPeriod = period;
+
+  // Handle AM/PM transitions
+  if (endHour === 12) {
+    endPeriod = period === "AM" ? "PM" : "AM"; // Switch at 12
+  } else if (endHour > 12) {
+    endHour -= 12; // Wrap back to 1 after 12 PM
+  }
+
+  return `${endHour}:${minutes} ${endPeriod}`;
+}
+
 function syncWeeklyView() {
   const weeklyURL = `weekly.html?date=${currentDate.toISOString().split("T")[0]}`;
   document.querySelector(".view-tabs .tab:nth-child(2)").onclick = () =>
@@ -67,21 +83,6 @@ async function fetchAppointments(date) {
   }
 }
 
-function calculateEndTime(startTime) {
-  const [hour, minutePart] = startTime.split(":");
-  const [minutes, period] = minutePart.trim().split(" ");
-  let endHour = parseInt(hour) + 1; // Add one hour
-  let endPeriod = period;
-
-  // Handle AM/PM transitions
-  if (endHour === 12) {
-    endPeriod = period === "AM" ? "PM" : "AM"; // Switch at 12
-  } else if (endHour > 12) {
-    endHour -= 12; // Wrap back to 1 after 12 PM
-  }
-
-  return `${endHour}:${minutes} ${endPeriod}`;
-}
 
 // Render appointments as buttons in the calendar grid
 async function renderAppointments() {
