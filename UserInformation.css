@@ -1,61 +1,54 @@
-/* General Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  /* Popup Window */
-  .popup-window {
-    background-color: #e0f7fa; /* Light blue color */
-    border: 1px solid #b0bec5; /* Light gray-blue border */
-    border-radius: 10px;
+/* Style for the pop-up window */
+.popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 300px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background-color: #eaf8fc; /* Light blue background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center; /* Center-align text */
+    z-index: 1000; /* Ensure it's above other elements */
   }
   
-  /* Title */
+  /* Style for the title */
   .popup-title {
-    margin: 0 0 10px;
-    font-size: 18px;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
   }
   
-  /* User Name */
+  /* Style for the user name text */
   .user-name {
-    margin: 10px 0 20px;
-    font-size: 16px;
-    color: #555;
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
   
-  /* Change Password Button */
-  .change-password-button {
-    display: inline-flex;
-    align-items: center;
-    background-color: #ffffff; /* White background */
-    color: #00796b; /* Teal text */
-    border: 1px solid #00796b;
-    border-radius: 5px;
+  /* Button styling */
+  .change-password-button, .close-popup-button {
+    display: inline-block;
     padding: 10px 15px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s, color 0.3s;
   }
   
-  .change-password-button:hover {
-    background-color: #00796b;
-    color: #ffffff;
+  .change-password-button {
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #ccc;
   }
   
-  /* Lock Icon */
-  .lock-icon {
-    margin-right: 8px;
-    font-size: 16px;
+  .change-password-button .lock-icon {
+    margin-right: 5px;
+  }
+  
+  .close-popup-button {
+    background-color: #f44336;
+    color: #fff;
+    margin-top: 10px;
   }
   

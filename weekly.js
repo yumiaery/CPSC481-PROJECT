@@ -111,5 +111,40 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add global event listener for clicks outside the dropdown
 window.addEventListener('click', closeDropdownOnClickOutside);
 
-// Add functionality for other future interactive elements here
+// Get references to the pop-up and its controls
+const userInfoPopup = document.getElementById("userInfoPopup");
+const userInfoLink = document.querySelector('#profileMenu a[href="#user-info"]');
+const closePopupButton = document.getElementById("closePopup");
+
+// Function to show the pop-up
+function showUserInfoPopup() {
+  userInfoPopup.style.display = "flex"; // Show the pop-up
+}
+
+// Function to close the pop-up
+function closeUserInfoPopup() {
+  userInfoPopup.style.display = "none"; // Hide the pop-up
+}
+
+// Add event listeners
+if (userInfoLink) {
+  userInfoLink.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    showUserInfoPopup();
+  });
+}
+
+if (closePopupButton) {
+  closePopupButton.addEventListener("click", closeUserInfoPopup);
+}
+
+// Close the pop-up if the user clicks outside of it
+window.addEventListener("click", (event) => {
+  if (event.target === userInfoPopup) {
+    closeUserInfoPopup();
+  }
+});
+
+
+
 weekly.js
