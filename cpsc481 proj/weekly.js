@@ -276,7 +276,11 @@ function attachEventListeners() {
 
   // Handle messages from iframe
   window.addEventListener("message", (event) => {
-    if (event.data.action === "close") closePopup();
+    if (event.data.action === "close") {
+      closePopup();
+    } else if (event.data.action === "refresh") {
+      renderWeek(); // Refresh the weekly calendar
+    }
   });
 }
 

@@ -170,6 +170,8 @@ document.querySelector(".popup-overlay").addEventListener("click", closePopup);
 window.addEventListener("message", (event) => {
   if (event.data.action === "close") {
     closePopup();
+  } else if (event.data.action === "refresh" && event.data.success) {
+    renderDay(); // Refresh the daily view
   }
 });
 

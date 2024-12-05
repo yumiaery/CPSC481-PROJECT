@@ -82,6 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+
 // saving a appointment.
 document.querySelector(".confirm-btn").addEventListener("click", (event) => {
   event.preventDefault(); // Prevent form submission
@@ -116,6 +118,8 @@ document.querySelector(".confirm-btn").addEventListener("click", (event) => {
       if (response.ok) {
         alert("Appointment saved successfully!");
         window.parent.postMessage({ action: "close" }, "*"); // Close the form
+        // Notify the parent window to refresh the view
+      window.parent.postMessage({ action: "refresh", success: true }, "*");
       } else {
         alert("Failed to save appointment.");
       }
@@ -125,3 +129,4 @@ document.querySelector(".confirm-btn").addEventListener("click", (event) => {
       alert("An error occurred while saving the appointment.");
     });
 });
+
