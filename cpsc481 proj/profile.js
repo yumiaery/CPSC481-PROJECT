@@ -39,4 +39,50 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('click', closeDropdownOnClickOutside);
 
 // Add functionality for other future interactive elements here
-  
+
+
+
+// Get references to the pop-up and its controls
+const userInfoPopup = document.getElementById("userInfoPopup");
+const userInfoLink = document.querySelector('#profileMenu a[href="#user-info"]');
+const closePopupButton = document.getElementById("closePopup");
+const buttons = userInfoPopup.querySelectorAll('button'); // Select the buttons in the popup
+
+// Function to show the pop-up
+function showUserInfoPopup() {
+  const body = document.body;
+  userInfoPopup.style.display = "block"; // Show the pop-up
+  body.style.pointerEvents = 'none';
+
+  // Enable interactions only for buttons inside the popup
+  buttons.forEach(button => {
+    button.style.pointerEvents = 'auto';  // Enable pointer events for each button
+  });
+}
+
+// Function to close the pop-up
+function closeUserInfoPopup() {
+  const body = document.body;
+  userInfoPopup.style.display = "none"; // Hide the pop-up
+  body.style.pointerEvents = 'auto';
+}
+
+// Add event listeners
+if (userInfoLink) {
+  userInfoLink.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    showUserInfoPopup();
+  });
+}
+
+if (closePopupButton) {
+  closePopupButton.addEventListener("click", closeUserInfoPopup);
+}
+
+// Close the pop-up if the user clicks outside of it
+window.addEventListener("click", (event) => {
+  if (event.target === userInfoPopup) {
+    closeUserInfoPopup();
+  }
+});
+
