@@ -185,29 +185,28 @@ app.put("/appointments", (req, res) => {
 
 
 app.get("/appointmentsMonthly", (req, res) => {
-  const { month, year, doctor } = req.query;
+    const { month, year, doctor } = req.query;
 
-  let sql = `
-      SELECT * FROM appointments 
-      WHERE MONTH(appointment_date) = ? AND YEAR(appointment_date) = ?
-  `;
-  const params = [month, year];
+    let sql = `
+        SELECT * FROM appointments 
+        WHERE MONTH(appointment_date) = ? AND YEAR(appointment_date) = ?
+    `;
+    const params = [month, year];
 
-  if (doctor) {
-      sql += " AND doctor_name = ?";
-      params.push(doctor);
-  }
+    if (doctor) {
+        sql += " AND doctor_name = ?";
+        params.push(doctor);
+    }
 
-  db.query(sql, params, (err, results) => {
-      if (err) {
-          console.error("Error fetching appointments:", err);
-          res.status(500).send("Error fetching appointments");
-      } else {
-          res.send(results);
-      }
-  });
+    db.query(sql, params, (err, results) => {
+        if (err) {
+            console.error("Error fetching appointments:", err);
+            res.status(500).send("Error fetching appointments");
+        } else {
+            res.send(results);
+        }
+    });
 });
-
 
 // Start server
 app.listen(port, () => {
