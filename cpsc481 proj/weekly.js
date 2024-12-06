@@ -28,6 +28,7 @@ const predefinedWeeks = [
 ];
 let currentWeekIndex = 14; // Default to the first week
 
+let selectedDoctor = ""; // Track the currently selected doctor
 function normalizeTime(time) {
   const [hour, minutePart] = time.split(":");
   const [minutes, period] = minutePart.trim().split(" ");
@@ -90,8 +91,12 @@ function navigateWeek(direction) {
 // Fetch appointments for the selected week
 async function fetchWeeklyAppointments(startDate, endDate) {
   try {
-    const response = await fetch(`http://localhost:3000/appointmentsWeekly?start_date=${startDate}&end_date=${endDate}`);
+    const queryParams = new URLSearchParams({ start_date: startDate, end_date: endDate });
+    if (selectedDoctor) queryParams.append("doctor", selectedDoctor);
+
+    const response = await fetch(`http://localhost:3000/appointmentsWeekly?${queryParams.toString()}`);
     if (!response.ok) throw new Error("Failed to fetch weekly appointments");
+
     return await response.json();
   } catch (error) {
     console.error("Error fetching weekly appointments:", error);
@@ -149,6 +154,16 @@ async function renderAppointmentsWeekly() {
     if (slot) {
       const appointmentButton = document.createElement("button");
       appointmentButton.classList.add("appointment-button");
+
+      // Assign class based on doctor name
+      if (appointment.doctor_name === "Dr. Smith") {
+        appointmentButton.classList.add("dr-smith");
+      } else if (appointment.doctor_name === "Dr. Johnson") {
+        appointmentButton.classList.add("dr-johnson");
+      } else if (appointment.doctor_name === "Dr. Lee") {
+        appointmentButton.classList.add("dr-lee");
+      }
+      
       appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
 
       // Add click event to open Appointment Details
@@ -235,6 +250,9 @@ function openAppointmentForm(appointment = {}) {
 
 
 
+
+
+
 // Render the calendar for the current week
 function renderWeek() {
 
@@ -279,8 +297,6 @@ function renderWeek() {
 }
 
 
-let selectedDoctor = ""; // Track the currently selected doctor
-
 
 document.addEventListener("DOMContentLoaded", initialize);
 
@@ -300,9 +316,14 @@ function initialize() {
 function attachEventListeners() {
   // Doctor filter change event
   const doctorFilter = document.getElementById("doctorFilter");
-  doctorFilter.addEventListener("change", handleDoctorFilterChange);
+  if (doctorFilter) {
+    doctorFilter.addEventListener("change", (event) => {
+      selectedDoctor = event.target.value; // Update selected doctor
+      renderWeek(); // Re-render the week with the selected doctor filter
+    });
+  }
 
-  // Navigation button events
+  // Existing listeners
   document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () => navigateWeek("backward"));
   document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () => navigateWeek("forward"));
 

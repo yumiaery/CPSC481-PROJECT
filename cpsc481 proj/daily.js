@@ -1,3 +1,6 @@
+let selectedDoctor = ""; // Default: show all doctors
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get("date");
 
@@ -74,8 +77,12 @@ function normalizeTime(time) {
 // Fetch appointments for the selected date
 async function fetchAppointments(date) {
   try {
-    const response = await fetch(`http://localhost:3000/appointments?date=${date}`);
+    const queryParams = new URLSearchParams({ date });
+    if (selectedDoctor) queryParams.append("doctor", selectedDoctor); // Add doctor filter if selected
+
+    const response = await fetch(`http://localhost:3000/appointments?${queryParams.toString()}`);
     if (!response.ok) throw new Error("Failed to fetch appointments");
+
     return await response.json();
   } catch (error) {
     console.error("Error fetching appointments:", error);
@@ -128,6 +135,16 @@ async function renderAppointments() {
       //create appointment button
       const appointmentButton = document.createElement("button");
       appointmentButton.classList.add("appointment-button");
+
+      // Assign class based on doctor name
+      if (appointment.doctor_name === "Dr. Smith") {
+        appointmentButton.classList.add("dr-smith");
+      } else if (appointment.doctor_name === "Dr. Johnson") {
+        appointmentButton.classList.add("dr-johnson");
+      } else if (appointment.doctor_name === "Dr. Lee") {
+        appointmentButton.classList.add("dr-lee");
+      }
+      
       appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
 
       // Add click event to the button
@@ -207,6 +224,8 @@ function navigateDay(direction) {
 document.addEventListener("DOMContentLoaded", () => {
   renderDay();
 
+  attachDoctorFilterListener();
+
   document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () => {
     navigateDay("backward");
   });
@@ -249,3 +268,17 @@ document.querySelector(".popup-overlay").addEventListener("click", () => {
   document.querySelector(".popup-overlay").style.display = "none";
   document.querySelector(".appointment-details-iframe").src = ""; // Reset iframe
 });
+
+
+
+function attachDoctorFilterListener() {
+  const doctorFilter = document.getElementById("doctorFilter");
+  if (doctorFilter) {
+    doctorFilter.addEventListener("change", (event) => {
+      selectedDoctor = event.target.value; // Update the selected doctor
+      renderDay(); // Re-render the appointments
+    });
+  } else {
+    console.error("Doctor filter dropdown not found in the DOM.");
+  }
+}

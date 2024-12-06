@@ -26,6 +26,8 @@ db.connect((err) => {
   console.log("Connected to MySQL!");
 });
 
+
+
 // Routes
 app.post("/appointments", (req, res) => {
   const { patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type } = req.body;
@@ -45,15 +47,23 @@ app.post("/appointments", (req, res) => {
   );
 });
 
+
+
 //retrieve appointments for daily view
 app.get("/appointments", (req, res) => {
-  const { date } = req.query;
+  const { date, doctor } = req.query;
+  const params = [date];
 
-  const sql = "SELECT * FROM appointments WHERE appointment_date = ?";
-  db.query(sql, [date], (err, results) => {
+  let sql = "SELECT * FROM appointments WHERE appointment_date = ?";
+  if (doctor) {
+    sql += " AND doctor_name = ?";
+    params.push(doctor);
+  }
+
+  db.query(sql, params, (err, results) => {
     if (err) {
-      console.error("Error fetching data:", err);
-      res.status(500).send("Error retrieving appointments.");
+      console.error("Error fetching appointments:", err);
+      res.status(500).send("Error fetching appointments");
     } else {
       res.send(results);
     }
@@ -62,7 +72,7 @@ app.get("/appointments", (req, res) => {
 
 
 
-// Retrieve a single appointment by ID
+// Retrieve a single appointment by ID ofr appointment detail
 app.get("/appointment", (req, res) => {
   const { id } = req.query;
 
@@ -83,10 +93,20 @@ app.get("/appointment", (req, res) => {
 
 //retrieve appointment for weely view
 app.get("/appointmentsWeekly", (req, res) => {
-  const { start_date, end_date } = req.query;
+  const { start_date, end_date, doctor } = req.query;
 
-  const sql = "SELECT * FROM appointments WHERE appointment_date BETWEEN ? AND ?";
-  db.query(sql, [start_date, end_date], (err, results) => {
+  let sql = `
+    SELECT * FROM appointments 
+    WHERE appointment_date BETWEEN ? AND ?
+  `;
+  const params = [start_date, end_date];
+
+  if (doctor) {
+    sql += " AND doctor_name = ?";
+    params.push(doctor);
+  }
+
+  db.query(sql, params, (err, results) => {
     if (err) {
       console.error("Error fetching weekly appointments:", err);
       res.status(500).send("Error retrieving weekly appointments.");
@@ -95,6 +115,8 @@ app.get("/appointmentsWeekly", (req, res) => {
     }
   });
 });
+
+
 
 //retrieve appointments for monthly view
 const monthMap = {
@@ -117,15 +139,28 @@ function getLastDayOfMonth(year, month) {
 }
 
 app.get("/appointmentsMonthly", (req, res) => {
-  const { month, year } = req.query;
+  const { month, year, doctor } = req.query;
 
-  const monthIndex = new Date(`${month} 1, ${year}`).getMonth(); // Convert month name to index (0-based)
+  // Convert month name and year to start and end dates
+  const monthIndex = new Date(`${month} 1, ${year}`).getMonth(); // 0-based month index
   const startDate = `${year}-${String(monthIndex + 1).padStart(2, "0")}-01`;
   const endDate = getLastDayOfMonth(year, monthIndex);
-  
-  // SQL Query for date range
-  const sql = "SELECT * FROM appointments WHERE appointment_date >= ? AND appointment_date <= ?";
-  db.query(sql, [startDate, endDate], (err, results) => {
+
+  // Base SQL query
+  let sql = `
+    SELECT * FROM appointments 
+    WHERE appointment_date >= ? AND appointment_date <= ?
+  `;
+  const params = [startDate, endDate];
+
+  // Add doctor filter if specified
+  if (doctor) {
+    sql += " AND doctor_name = ?";
+    params.push(doctor);
+  }
+
+  // Execute the query
+  db.query(sql, params, (err, results) => {
     if (err) {
       console.error("Error fetching monthly appointments:", err);
       res.status(500).send("Error retrieving monthly appointments.");
@@ -134,6 +169,9 @@ app.get("/appointmentsMonthly", (req, res) => {
     }
   });
 });
+
+
+
 
 app.delete("/appointments", (req, res) => {
   const { id } = req.query;
@@ -155,6 +193,8 @@ app.delete("/appointments", (req, res) => {
     }
   });
 });
+
+
 
 //update from eidtable fields in deets page
 app.put("/appointments", (req, res) => {

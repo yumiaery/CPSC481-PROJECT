@@ -95,9 +95,24 @@ const hardcodedCalendars = {
     renderCalendar(currentMonthYear);
   }
   
+
+  let selectedDoctor = ""; // Default to all doctors
+
   
   document.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentMonthYear);
+
+    // Attach event listener to the doctor dropdown
+    const doctorDropdown = document.querySelector("#doctorFilter");
+    if (doctorDropdown) {
+      doctorDropdown.addEventListener("change", (event) => {
+        selectedDoctor = event.target.value; // Update selected doctor
+        console.log("Selected doctor:", selectedDoctor);
+        renderAppointmentsMonthly(); // Re-fetch and render filtered appointments
+      });
+    } else {
+      console.error("Doctor dropdown not found in the DOM.");
+    }
   
     document.querySelector(".arrow-btn:nth-child(1)").addEventListener("click", () => navigate("backward"));
     document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () => navigate("forward"));
@@ -118,9 +133,18 @@ const hardcodedCalendars = {
   
   async function fetchMonthlyAppointments(month, year) {
     try {
-      const response = await fetch(`http://localhost:3000/appointmentsMonthly?month=${month}&year=${year}`);
-      if (!response.ok) throw new Error("Failed to fetch monthly appointments");
-      return await response.json();
+      const queryParams = new URLSearchParams({ month, year });
+        if (selectedDoctor) queryParams.append("doctor", selectedDoctor); // Add the doctor filter if selected
+
+        const fetchURL = `http://localhost:3000/appointmentsMonthly?${queryParams.toString()}`;
+        console.log("Fetching appointments from:", fetchURL); // Log the generated URL
+
+        const response = await fetch(fetchURL);
+        if (!response.ok) throw new Error("Failed to fetch monthly appointments");
+
+        const data = await response.json();
+        console.log("Fetched appointments:", data); // Log fetched data
+        return data;
     } catch (error) {
       console.error("Error fetching monthly appointments:", error);
       return [];
@@ -136,7 +160,12 @@ const hardcodedCalendars = {
     const monthLabel = document.querySelector(".calendar-date span").textContent; // e.g., "December 2024"
     const [month, year] = monthLabel.split(" ");
   
-    const appointments = await fetchMonthlyAppointments(month, year);
+    const appointments = await fetchMonthlyAppointments(month, year, selectedDoctor);
+
+    // Clear existing appointments from the calendar
+    calendarGrid.querySelectorAll(".appointments").forEach((container) => {
+      container.innerHTML = "";
+    });
   
     // Map appointments to the corresponding day cells
     appointments.forEach((appointment) => {
@@ -148,6 +177,16 @@ const hardcodedCalendars = {
   
         const appointmentButton = document.createElement("button");
         appointmentButton.classList.add("appointment-button");
+
+        // Assign class based on doctor name
+        if (appointment.doctor_name === "Dr. Smith") {
+          appointmentButton.classList.add("dr-smith");
+        } else if (appointment.doctor_name === "Dr. Johnson") {
+          appointmentButton.classList.add("dr-johnson");
+        } else if (appointment.doctor_name === "Dr. Lee") {
+          appointmentButton.classList.add("dr-lee");
+        }
+
         appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
   
         // Add click event to open the appointment details

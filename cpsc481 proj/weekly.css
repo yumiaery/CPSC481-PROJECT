@@ -201,3 +201,18 @@ body {
   height: 100%;
   border: none;
 }
+
+.appointment-button.dr-smith {
+  background-color: #d61d98; /* Light red for Dr. Smith */
+  border: 1px solid #d61d98;
+}
+
+.appointment-button.dr-johnson {
+  background-color: #d64c15; /* Light green for Dr. Johnson */
+  border: 1px solid #d64c15;
+}
+
+.appointment-button.dr-lee {
+  background-color: #32d655; /* Light blue for Dr. Lee */
+  border: 1px solid #32d655;
+}
