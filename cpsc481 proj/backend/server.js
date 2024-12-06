@@ -60,6 +60,27 @@ app.get("/appointments", (req, res) => {
   });
 });
 
+
+
+// Retrieve a single appointment by ID
+app.get("/appointment", (req, res) => {
+  const { id } = req.query;
+
+  const sql = "SELECT * FROM appointments WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Error fetching appointment details:", err);
+      res.status(500).send("Error retrieving appointment details.");
+    } else if (result.length === 0) {
+      res.status(404).send("Appointment not found.");
+    } else {
+      res.send(result[0]); // Return the first (and only) result
+    }
+  });
+});
+
+
+
 //retrieve appointment for weely view
 app.get("/appointmentsWeekly", (req, res) => {
   const { start_date, end_date } = req.query;
@@ -91,19 +112,16 @@ const monthMap = {
   December: "12",
 };
 
+function getLastDayOfMonth(year, month) {
+  return new Date(year, month + 1, 0).toISOString().split("T")[0]; // Last day of the month
+}
+
 app.get("/appointmentsMonthly", (req, res) => {
   const { month, year } = req.query;
 
-  console.log("Month:", month, "Year:", year);
-
-  // Get the numerical representation of the month
-  const monthNumber = monthMap[month];
-
-  // Calculate start and end dates
-  const startDate = `${year}-${monthNumber}-01`;
-  const endDate = `${year}-${monthNumber}-31`; // Handles all months (SQL will correct overflows)
-
-  console.log("Start Date:", startDate, "End Date:", endDate);
+  const monthIndex = new Date(`${month} 1, ${year}`).getMonth(); // Convert month name to index (0-based)
+  const startDate = `${year}-${String(monthIndex + 1).padStart(2, "0")}-01`;
+  const endDate = getLastDayOfMonth(year, monthIndex);
   
   // SQL Query for date range
   const sql = "SELECT * FROM appointments WHERE appointment_date >= ? AND appointment_date <= ?";

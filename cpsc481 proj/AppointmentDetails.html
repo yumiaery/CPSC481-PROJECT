@@ -14,66 +14,40 @@
       <form>
         <!-- Patient Name -->
         <label for="patient-name">Patient Name:</label>
-        <div class="input-container">
-          <input type="text" id="patient-name" value="Bob Smith" readonly>
-          <button type="button" class="edit-btn">
-            🖉
-          </button>
-        </div>
-        
+        <input type="text" id="patient-name" readonly>
 
         <!-- Appointment Date -->
         <label for="appointment-date">Appointment Date:</label>
-        <input type="text" id="appointment-date" value="Oct. 21, 2024" readonly>
-        
+        <input type="text" id="appointment-date" readonly>
+
         <!-- Appointment Time -->
         <label for="appointment-time">Appointment Time:</label>
         <div class="time-inputs">
-          <input type="text" id="start-time" value="9:00 AM" readonly>
+          <input type="text" id="start-time" readonly>
           <span>—</span>
-          <input type="text" id="end-time" value="10:00 AM" readonly>
+          <input type="text" id="end-time" readonly>
         </div>
-        
+
         <!-- Doctor Name -->
         <label for="doctor-name">Doctor Name:</label>
-        <input type="text" id="doctor-name" value="Dr. David" readonly>
-        
+        <input type="text" id="doctor-name" readonly>
+
         <!-- Appointment Type -->
         <label for="appointment-type">Appointment Type:</label>
-        <div class="input-container">
-          <input type="text" id="appointment-type" value="Online" readonly>
-          <button type="button" class="edit-btn">
-            🖉
-          </button>
-        </div>
+        <input type="text" id="appointment-type" readonly>
 
         <!-- Notes -->
         <label for="notes">Notes:</label>
-        <div class="textarea-container">
-          <textarea id="notes" placeholder="Patient has flu." readonly></textarea>
-          <button type="button" class="edit-btn">
-            🖉
-          </button>
-        </div>
-
-
-        <!-- Radio Buttons -->
-        <label for="status-tracker">Status:</label>
-        <div class="radio-buttons">
-          <input type="radio" name="status" value="arrived">
-          <span class="label-text">Arrived</span>
-          
-          <input type="radio" name="status" value="no_show">
-          <span class="label-text">No Show</span>
-        </div>
+        <textarea id="notes" readonly></textarea>
 
         <!-- Form Buttons -->
         <div class="form-buttons">
-          <button type="submit" class="reschedule-btn">Reschedule</button>
+          <button type="button" class="reschedule-btn">Reschedule</button>
           <button type="button" class="cancel-appointment-btn">Cancel Appointment</button>
         </div>
       </form>
     </div>
   </div>
+  <script src="AppointmentDetails.js"></script>
 </body>
 </html>

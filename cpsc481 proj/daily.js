@@ -125,6 +125,7 @@ async function renderAppointments() {
 
     if (timeSlot && timeSlot.nextElementSibling) {
       const slot = timeSlot.nextElementSibling;
+      //create appointment button
       const appointmentButton = document.createElement("button");
       appointmentButton.classList.add("appointment-button");
       appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
@@ -132,7 +133,7 @@ async function renderAppointments() {
       // Add click event to the button
       appointmentButton.addEventListener("click", (event) => {
         event.stopPropagation(); // Prevent the parent slot's click handler
-        openAppointmentForm(appointment);
+        openAppointmentDetails(appointment);
       });
 
       slot.appendChild(appointmentButton);
@@ -158,22 +159,33 @@ function openAppointmentForm(appointment = {}) {
   popupOverlay.style.display = "block";
 }
 
-// Close popup
+
 function closePopup() {
+  // Close the Appointment Form Popup
   document.querySelector(".appointment-form-container").style.display = "none";
-  document.querySelector(".popup-overlay").style.display = "none";
   document.querySelector(".appointment-form-iframe").src = "";
+
+  // Close the Appointment Details Popup
+  document.querySelector(".appointment-details-container").style.display = "none";
+  document.querySelector(".appointment-details-iframe").src = "";
+
+  // Hide the overlay
+  document.querySelector(".popup-overlay").style.display = "none";
 }
 
+// Overlay Click: Closes whichever popup is active
 document.querySelector(".popup-overlay").addEventListener("click", closePopup);
 
+// Message Event: Handles iframe messages like "close" or "refresh"
 window.addEventListener("message", (event) => {
   if (event.data.action === "close") {
-    closePopup();
+    closePopup(); // Close any active popups
   } else if (event.data.action === "refresh" && event.data.success) {
     renderDay(); // Refresh the daily view
   }
 });
+
+
 
 function renderDay() {
   const dayLabel = document.querySelector(".calendar-date span");
@@ -202,4 +214,38 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".arrow-btn:nth-child(3)").addEventListener("click", () => {
     navigateDay("forward");
   });
+});
+
+
+
+function openAppointmentDetails(appointment) {
+  const iframe = document.querySelector(".appointment-details-iframe");
+  const popupOverlay = document.querySelector(".popup-overlay");
+  const appointmentDetailsContainer = document.querySelector(".appointment-details-container");
+
+  const query = new URLSearchParams({
+    id: appointment.id, // Pass the unique appointment ID
+    patient_name: appointment.patient_name,
+    date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
+    time: appointment.start_time,
+    endTime: appointment.end_time,
+    doctor: appointment.doctor_name,
+    notes: appointment.notes,
+    type: appointment.appointment_type,
+  });
+
+  iframe.src = `AppointmentDetails.html?${query.toString()}`;
+  appointmentDetailsContainer.style.display = "block";
+  popupOverlay.style.display = "block";
+}
+
+// Close popup
+document.querySelector(".popup-overlay").addEventListener("click", () => {
+  document.querySelector(".appointment-details-container").style.display = "none";
+  document.querySelector(".popup-overlay").style.display = "none";
+  document.querySelector(".appointment-details-iframe").src = ""; // Reset iframe
 });

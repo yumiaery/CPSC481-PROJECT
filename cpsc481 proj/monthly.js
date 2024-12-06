@@ -3,10 +3,22 @@
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get("date");
 
-// Set currentMonthYear based on the URL parameter or default to December 2024
-let currentMonthYear = dateParam
-  ? `${new Date(dateParam).toLocaleString("default", { month: "long" })} ${new Date(dateParam).getFullYear()}`
-  : "December 2024";
+
+try {
+  if (dateParam) {
+    const parsedDate = new Date(dateParam);
+    if (!isNaN(parsedDate)) {
+      currentMonthYear = `${parsedDate.toLocaleString("default", { month: "long" })} ${parsedDate.getFullYear()}`;
+    } else {
+      throw new Error("Invalid date parameter");
+    }
+  } else {
+    currentMonthYear = "December 2024"; // Default
+  }
+} catch (error) {
+  console.error("Error parsing dateParam:", error);
+  currentMonthYear = "December 2024"; // Fallback
+}
 
   // Hardcoded month data
 const hardcodedCalendars = {
@@ -65,8 +77,8 @@ const hardcodedCalendars = {
     // Fetch and render appointments
     await renderAppointmentsMonthly();
   }
-  
-  // Navigation logic
+
+
   function navigate(direction) {
     const keys = Object.keys(hardcodedCalendars);
     const currentIndex = keys.indexOf(currentMonthYear);
@@ -75,10 +87,14 @@ const hardcodedCalendars = {
       currentMonthYear = keys[currentIndex + 1];
     } else if (direction === "backward" && currentIndex > 0) {
       currentMonthYear = keys[currentIndex - 1];
+    } else {
+      console.warn("No further months available for navigation.");
+      return; // Exit if navigation is not possible
     }
   
     renderCalendar(currentMonthYear);
   }
+  
   
   document.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentMonthYear);
@@ -111,6 +127,8 @@ const hardcodedCalendars = {
     }
   }
 
+ 
+
   async function renderAppointmentsMonthly() {
     const calendarGrid = document.querySelector(".calendar-grid");
   
@@ -119,37 +137,32 @@ const hardcodedCalendars = {
     const [month, year] = monthLabel.split(" ");
   
     const appointments = await fetchMonthlyAppointments(month, year);
-
+  
     // Map appointments to the corresponding day cells
     appointments.forEach((appointment) => {
-      
       const appointmentDate = new Date(appointment.appointment_date).toISOString().split("T")[0];
-
       const dayCell = calendarGrid.querySelector(`.day-cell[data-date="${appointmentDate}"]`);
   
-
       if (dayCell) {
-        console.log("Found matching day cell:", dayCell);
         const appointmentsContainer = dayCell.querySelector(".appointments");
   
         const appointmentButton = document.createElement("button");
         appointmentButton.classList.add("appointment-button");
         appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
   
-        // Add click event to open the appointment form
+        // Add click event to open the appointment details
         appointmentButton.addEventListener("click", (event) => {
           event.stopPropagation(); // Prevent triggering the day cell handler
-          openAppointmentForm({
-            ...appointment,
-          });
+          openAppointmentDetails(appointment);
         });
   
         appointmentsContainer.appendChild(appointmentButton);
       } else {
-        console.error("No matching day cell found for appointment date:", appointment.appointment_date);
+        console.warn(`No matching day cell found for appointment date: ${appointment.appointment_date}`);
       }
     });
   }
+  
   
   function openAppointmentForm(appointment = {}) {
     const iframe = document.querySelector(".appointment-form-iframe");
@@ -167,6 +180,52 @@ const hardcodedCalendars = {
     appointmentFormContainer.style.display = "block";
     popupOverlay.style.display = "block";
   }
+  
+
+
+  function openAppointmentDetails(appointment) {
+    const iframe = document.querySelector(".appointment-details-iframe");
+    const popupOverlay = document.querySelector(".popup-overlay");
+    const appointmentDetailsContainer = document.querySelector(".appointment-details-container");
+  
+    const query = new URLSearchParams({
+      id: appointment.id,
+      patient_name: appointment.patient_name,
+      date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      time: appointment.start_time,
+      endTime: appointment.end_time,
+      doctor: appointment.doctor_name,
+      notes: appointment.notes,
+      type: appointment.appointment_type,
+    });
+  
+    iframe.src = `AppointmentDetails.html?${query.toString()}`;
+    appointmentDetailsContainer.style.display = "block";
+    popupOverlay.style.display = "block";
+  }
+
+
+  function closePopup() {
+    // Close the Appointment Details Popup
+    document.querySelector(".appointment-details-container").style.display = "none";
+    document.querySelector(".appointment-details-iframe").src = "";
+  
+    // Hide the overlay
+    document.querySelector(".popup-overlay").style.display = "none";
+  }
+
+  document.querySelector(".popup-overlay").addEventListener("click", closePopup);
+
+  window.addEventListener("message", (event) => {
+    if (event.data.action === "close") {
+      closePopup();
+    }
+  });
+  
   
   
   

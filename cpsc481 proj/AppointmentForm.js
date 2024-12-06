@@ -129,4 +129,3 @@ document.querySelector(".confirm-btn").addEventListener("click", (event) => {
       alert("An error occurred while saving the appointment.");
     });
 });
-

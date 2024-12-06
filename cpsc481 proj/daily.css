@@ -35,7 +35,7 @@ body {
 }
 
 .calendar-header .search-bar {
-  width: 30%; /* Adjusted size for daily view */
+  width: 30%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -93,17 +93,17 @@ body {
 /* Calendar Grid Styling */
 .calendar-grid {
   display: grid;
-  grid-template-columns: 100px 1fr; /* 1 column for times, 1 for events */
+  grid-template-columns: 100px 1fr;
   flex-grow: 1;
   overflow-y: auto;
-  height: calc(100% - 160px); /* Adjust height to fit within available space */
+  height: calc(100% - 160px);
   background-color: #edf6fc;
 }
 
 .calendar-grid .time {
   text-align: center;
   padding: 10px;
-  border: 1px solid #ddd; /* Add border to all cells */
+  border: 1px solid #ddd;
   font-weight: normal;
   box-sizing: border-box;
   border-bottom: 2px solid #000000;
@@ -129,7 +129,7 @@ body {
   font-size: 0.9rem;
   text-align: center;
   cursor: pointer;
-  width: calc(100% - 10px); /* Fit within the slot */
+  width: calc(100% - 10px);
   box-sizing: border-box;
 }
 
@@ -160,11 +160,32 @@ body {
   background: transparent;
   border-radius: 10px;
   width: 400px;
-  height: 620px; /* Adjust to fit form */
+  height: 620px;
   overflow: hidden;
 }
 
 .appointment-form-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Appointment Details Popup */
+.appointment-details-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: transparent;
+  border-radius: 10px;
+  width: 400px;
+  height: 620px;
+  overflow: hidden;
+}
+
+.appointment-details-iframe {
   width: 100%;
   height: 100%;
   border: none;
