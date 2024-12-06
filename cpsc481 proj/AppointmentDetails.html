@@ -7,10 +7,25 @@
   <link rel="stylesheet" href="AppointmentDetails.css">
 </head>
 <body>
+  <div class="c-popup" id="confirmCancellation">
+    <div class="c-popup-header">
+      <h2>Confirm Cancellation</h2>
+      <button class="c-close-button" onclick="closeCancelConfirmation()">×</button>
+    </div>
+    <h4>Are you sure you want to cancel this appointment?</p>
+    <div class="c-popup-actions">
+      <button class="c-cancel-button" onclick="confirmCancel()">Cancel Appointment</button>
+      <button class="c-go-back-button" onclick="closeCancelConfirmation()">Go Back</button>
+    </div>
+  </div>
+
   <div class="appointment-form-container">
     <div class="appointment-form">
       <button class="close-btn">✖</button>
-      <h2>Appointment Details</h2>
+      <div class="appointment-header">
+        <h2>Appointment Details <button id="edit-button" class="edit-btn" title="Edit">✏️</button></h2>
+      </div>
+      
       <form>
         <!-- Patient Name -->
         <label for="patient-name">Patient Name:</label>
@@ -33,17 +48,36 @@
         <input type="text" id="doctor-name" readonly>
 
         <!-- Appointment Type -->
-        <label for="appointment-type">Appointment Type:</label>
-        <input type="text" id="appointment-type" readonly>
+        <label for="appointment-type">Appointemnt Type: </label>
+        <select id="appointment-type" readonly>
+          <option value="online">Online</option>
+          <option value="in-clinic">In-Clinic</option>
+        </select>
+        
 
         <!-- Notes -->
         <label for="notes">Notes:</label>
         <textarea id="notes" readonly></textarea>
 
+        <!-- Status -->
+        <div class="status-section">
+          <p><strong>Track Status:</strong></p>
+          <label>
+            <input type="radio" name="status" value="Arrived" id="status-arrived">
+            Arrived
+          </label>
+          <label>
+            <input type="radio" name="status" value="No Show" id="status-no-show">
+            No Show
+          </label>
+        </div>
+
         <!-- Form Buttons -->
         <div class="form-buttons">
           <button type="button" class="reschedule-btn">Reschedule</button>
-          <button type="button" class="cancel-appointment-btn">Cancel Appointment</button>
+          <button type="button" class="cancel-appointment-btn" onclick="openCancelConfirmation()">Cancel Appointment</button>
+          <button type="button" class="confirm-changes" onclick="confirmChanges()" style="display: none;">Confirm Changes</button>
+          <button type="button" class="discard-changes" onclick="discardChanges()" style="display: none;">Discard Changes</button>
         </div>
       </form>
     </div>

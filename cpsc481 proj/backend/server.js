@@ -135,6 +135,80 @@ app.get("/appointmentsMonthly", (req, res) => {
   });
 });
 
+app.delete("/appointments", (req, res) => {
+  const { id } = req.query;
+
+  if (!id) {
+    res.status(400).send("Appointment ID is required.");
+    return;
+  }
+
+  const sql = "DELETE FROM appointments WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting appointment:", err);
+      res.status(500).send("Error deleting appointment.");
+    } else if (result.affectedRows === 0) {
+      res.status(404).send("Appointment not found.");
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
+
+//update from eidtable fields in deets page
+app.put("/appointments", (req, res) => {
+  const { id, patient_name, appointment_type, notes } = req.body;
+
+  if (!id) {
+    res.status(400).send("Appointment ID is required.");
+    return;
+  }
+
+  const sql = `
+    UPDATE appointments 
+    SET patient_name = ?, appointment_type = ?, notes = ? 
+    WHERE id = ?
+  `;
+
+  db.query(sql, [patient_name, appointment_type, notes, id], (err, result) => {
+    if (err) {
+      console.error("Error updating appointment:", err);
+      res.status(500).send("Error updating appointment.");
+    } else if (result.affectedRows === 0) {
+      res.status(404).send("Appointment not found.");
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
+
+
+app.get("/appointmentsMonthly", (req, res) => {
+  const { month, year, doctor } = req.query;
+
+  let sql = `
+      SELECT * FROM appointments 
+      WHERE MONTH(appointment_date) = ? AND YEAR(appointment_date) = ?
+  `;
+  const params = [month, year];
+
+  if (doctor) {
+      sql += " AND doctor_name = ?";
+      params.push(doctor);
+  }
+
+  db.query(sql, params, (err, results) => {
+      if (err) {
+          console.error("Error fetching appointments:", err);
+          res.status(500).send("Error fetching appointments");
+      } else {
+          res.send(results);
+      }
+  });
+});
+
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

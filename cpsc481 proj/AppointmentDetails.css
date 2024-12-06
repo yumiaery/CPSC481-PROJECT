@@ -5,14 +5,25 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   font-family: Arial, sans-serif;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+} */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Prevent unwanted body scrolling */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .appointment-form-container {
   background-color: #e0f7fa;
@@ -20,7 +31,8 @@ body {
   width: 400px;
   padding: 20px;
   position: relative;
-  height: 650px
+  height: 650px;
+  overflow-y: auto;
   /* max-height: 90%; */
 }
 
@@ -31,7 +43,6 @@ body {
   color: #333;
 }
 
-/* Close Button */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -97,6 +108,16 @@ textarea {
   cursor: pointer;
 }
 
+.confirm-changes {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 45%;
+  cursor: pointer;
+}
+
 .cancel-appointment-btn {
   background-color: #b71c1c;
   color: white;
@@ -105,4 +126,208 @@ textarea {
   border-radius: 5px;
   width: 45%;
   cursor: pointer;
+}
+
+.discard-changes {
+  background-color: #b71c1c;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 45%;
+  cursor: pointer;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Slight dimming effect */
+  z-index: 1500; /* Below Cancel Confirmation */
+}
+
+/* cancel form stuff */
+
+#confirmCancellation {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f0f8ff; /* Lighter background color */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  width: 350px; /* Adjusted width */
+  z-index: 1050; /* Higher than the details popup */
+  text-align: center;
+}
+
+#confirmCancellation .c-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#confirmCancellation .c-popup-header h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+#confirmCancellation .c-popup-header .c-close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #999;
+}
+
+#confirmCancellation .c-popup-header .c-close-button:hover {
+  color: #555;
+}
+
+#confirmCancellation .c-popup-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#confirmCancellation .c-cancel-button,
+#confirmCancellation .c-go-back-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#confirmCancellation .c-cancel-button {
+  /* background-color: #ff4d4d; */
+  background-color: #ddd;
+  color: #333;
+}
+
+#confirmCancellation .c-cancel-button:hover {
+  /* background-color: #ff6666; */
+  background-color: #ccc;
+}
+
+#confirmCancellation .c-go-back-button {
+  background-color: #ddd; /* Neutral color for "Go Back" */
+  color: #333;
+}
+
+#confirmCancellation .c-go-back-button:hover {
+  background-color: #ccc;
+}
+
+/* Status Section Styling */
+.status-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.status-section p {
+  margin: 0 0 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-section label {
+  display: inline-block;
+  margin-right: 15px;
+  cursor: pointer;
+  font-size: 0.9em; /* Adjust font size for consistency */
+}
+
+.status-section input[type="radio"] {
+  margin-right: 5px;
+  width: 18px; /* Set a fixed size for radio buttons */
+  height: 18px;
+  vertical-align: middle;
+}
+
+/* Pencil Button Styling */
+.appointment-header .edit-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 10px; /* Adjust margin between title and pencil */
+  margin-top: -22px; /* Use negative margin to move it upwards */
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Align vertically with the title */
+  justify-content: center;
+  transition: transform 0.3s ease, color 0.3s ease; /* Hover effect */
+}
+
+.appointment-header .edit-btn img {
+  width: 16px; /* Adjust size to match title height */
+  height: 16px;
+  vertical-align: middle; /* Ensure alignment */
+}
+
+.appointment-header .edit-btn:hover {
+  transform: scale(1.1); /* Slight hover zoom */
+  color: #ff6f61; /* Optional: Color change */
+}
+
+/* Default Readonly Style */
+form input[readonly], form textarea[readonly] {
+  background-color: #f0f0f0; /* Gray background for readonly */
+  color: #333; /* Text color */
+  cursor: not-allowed; /* Indicates it's not editable */
+  border: 1px solid #ccc;
+}
+
+/* Editable Style */
+form input:not([readonly]), form textarea:not([readonly]) {
+  background-color: #fff; /* White background for editable */
+  color: #000; /* Text color */
+  cursor: text; /* Indicates it's editable */
+  border: 1px solid #00796b; /* Slightly more prominent border for editable */
+}
+
+/* Appointment Type Dropdown Styling */
+form select {
+  width: 100%; /* Match width with other input fields */
+  padding: 8px; /* Same padding as input fields */
+  margin-bottom: 10px; /* Match the margin spacing */
+  border: 1px solid #ccc; /* Same border as input fields */
+  border-radius: 5px; /* Rounded corners for consistency */
+  background-color: #f0f0f0; /* Match the background color */
+  font-size: 1em; /* Match font size with other input fields */
+  color: #333; /* Text color */
+}
+
+form select:focus {
+  border-color: #00796b; /* Highlight color for focus state */
+  outline: none; /* Remove default outline */
+}
+
+form select[readonly] {
+  pointer-events: none; /* Prevent interaction when readonly */
+  background-color: #f0f0f0; /* Gray out the field */
+}
+
+#appointment-type {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0; /* Matches readonly inputs */
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+#appointment-type.editable {
+  background-color: white; /* Matches writable fields */
 }

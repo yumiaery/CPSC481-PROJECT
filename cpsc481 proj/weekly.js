@@ -318,6 +318,7 @@ function attachEventListeners() {
     if (event.data.action === "close") {
       closePopup();
     } else if (event.data.action === "refresh") {
+      console.log("Refresh action received in weekly view"); // Debugging
       renderWeek(); // Refresh the weekly calendar
     }
   });

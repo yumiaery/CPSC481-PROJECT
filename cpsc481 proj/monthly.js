@@ -222,9 +222,12 @@ const hardcodedCalendars = {
 
   window.addEventListener("message", (event) => {
     if (event.data.action === "close") {
-      closePopup();
+        closePopup();
+    } else if (event.data.action === "refresh" && event.data.success) {
+        console.log("Refresh action received in monthly view"); // Debugging
+        renderCalendar(currentMonthYear); // Refresh the monthly calendar
     }
-  });
+});
   
   
   

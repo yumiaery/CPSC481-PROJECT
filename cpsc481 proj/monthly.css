@@ -221,7 +221,7 @@ body {
   border-radius: 10px;
   width: 400px;
   height: 620px; /* Adjust to fit form */
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .appointment-details-iframe {
