@@ -233,11 +233,14 @@ function openAppointmentForm(appointment = {}) {
   const appointmentFormContainer = document.querySelector(".appointment-form-container");
 
   // Ensure the appointment date is provided or use a fallback
-  const selectedDate = appointment.appointment_date || new Date().toISOString().split("T")[0]; // Fallback to today if no date
+  // const selectedDate = appointment.appointment_date || new Date().toISOString().split("T")[0]; // Fallback to today if no date
 
+  const selectedDate = new Date(appointment.appointment_date || new Date());
+  selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day
   // Prepare query parameters
   const query = new URLSearchParams({
-    date: selectedDate, // Date of the appointment
+    // date: selectedDate, // Date of the appointment
+    date: selectedDate.toISOString().split("T")[0],
     time: appointment.start_time || "", // Start time
     endTime: appointment.end_time || "", // End time
     doctor: appointment.doctor_name || "No Doctor Selected", // Default doctor if not provided

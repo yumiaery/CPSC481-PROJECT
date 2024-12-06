@@ -63,10 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("doctor-name").value = doctorName;
   }
   if (appointmentDate) {
-    document.getElementById("appointment-date").value = new Date(appointmentDate).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
+    const adjustedDate = new Date(appointmentDate);
+    adjustedDate.setDate(adjustedDate.getDate() + 1); // Add 1 day to correct the offset
+    document.getElementById("appointment-date").value = adjustedDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
     });
   }
   if (startTime) {
