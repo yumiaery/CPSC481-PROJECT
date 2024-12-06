@@ -16,11 +16,11 @@
   
   .appointment-form-container {
     background-color: #e0f7fa;
-    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 400px;
     padding: 20px;
     position: relative;
+    height: 650px;
   }
   
   /* Header */
@@ -130,7 +130,7 @@
   
   .input-container input {
     width: 100%;
-    padding-right: 35px; /* Space for the icon */
+    padding-right: 35px;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;

@@ -15,8 +15,11 @@
       <input type="text" placeholder="Search Patients..." class="search-bar">
       <div class="filter-container">
         <span>Filters:</span>
-        <select>
-          <option value="doctors">Doctors</option>
+        <select id="doctorFilter">
+          <option value="" selected>All Doctors</option>
+          <option value="Dr. Smith">Dr. Smith</option>
+          <option value="Dr. Johnson">Dr. Johnson</option>
+          <option value="Dr. Lee">Dr. Lee</option>
         </select>
         <!-- Profile Dropdown -->
         <div class="profile-dropdown">
@@ -58,8 +61,18 @@
       <div class="day-label">Sunday</div>
 
   </div>
+  <!-- Popup Overlay -->
+  <div class="popup-overlay"></div>
+
+  <!-- Appointment Details Popup -->
+  <div class="appointment-details-container" style="display: none;">
+    <iframe src="" class="appointment-details-iframe"></iframe>
+  </div>
+
+
   <script src="profile.js"></script>
   <script src="navigation.js"></script>
   <script src="monthly.js"></script>
+
 </body>
 </html>

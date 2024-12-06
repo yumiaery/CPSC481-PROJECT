@@ -1,119 +1,207 @@
 /* General Styling */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .calendar-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #ccc;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: #fff;
-  }
-  
-  /* Header Styling */
-  .calendar-header {
-    background-color: #c4dff0;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #000000;
-  }
-  
-  .calendar-header .search-bar {
-    width: 30%; /* Adjusted size for daily view */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .calendar-header .filter-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .calendar-header .profile-icon {
-    font-size: 1.5rem;
-  }
-  
-  /* Tabs Styling */
-  .tabs-header {
-    background-color: #c4dff0;
-    padding: 10px;
-    border-bottom: 2px solid #000000;
-  }
-  
-  .view-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .view-tabs .tab {
-    cursor: pointer;
-    font-weight: bold;
-    color: #555;
-    padding: 5px 15px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .view-tabs .tab.active {
-    background-color: #aaa;
-    color: #fff;
-  }
-  
-  /* Date Navigation Styling */
-  .calendar-date {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    font-weight: bold;
-    background-color: #edf6fc;
-    border-bottom: 2px solid #000000;
-  }
-  
-  /* Calendar Grid Styling */
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: 100px 1fr; /* 1 column for times, 1 for events */
-    flex-grow: 1;
-    overflow-y: auto;
-    height: calc(100% - 160px); /* Adjust height to fit within available space */
-    background-color: #edf6fc;
-    
-  }
-  
-  .calendar-grid .time{
-    text-align: center;
-    padding: 10px;
-    border: 1px solid #ddd; /* Add border to all cells */
-    font-weight: normal;
-    box-sizing: border-box;
-    border-bottom: 2px solid #000000;
-    border-right: 2px solid #000000;
-    background-color: #c4dff0;
-    font-weight: bold;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .calendar-grid div {
-    border-bottom: 2px solid #000000;
-    border-right: 2px solid #000000;
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+/* Header Styling */
+.calendar-header {
+  background-color: #c4dff0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000000;
+}
+
+.calendar-header .search-bar {
+  width: 30%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.calendar-header .filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-header .profile-icon {
+  font-size: 1.5rem;
+}
+
+/* Tabs Styling */
+.tabs-header {
+  background-color: #c4dff0;
+  padding: 10px;
+  border-bottom: 2px solid #000000;
+}
+
+.view-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.view-tabs .tab {
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.view-tabs .tab.active {
+  background-color: #aaa;
+  color: #fff;
+}
+
+/* Date Navigation Styling */
+.calendar-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  font-weight: bold;
+  background-color: #edf6fc;
+  border-bottom: 2px solid #000000;
+}
+
+/* Calendar Grid Styling */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: calc(100% - 160px);
+  background-color: #edf6fc;
+}
+
+.calendar-grid .time {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-weight: normal;
+  box-sizing: border-box;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  background-color: #c4dff0;
+  font-weight: bold;
+}
+
+.calendar-grid div {
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+}
+
+/* Appointment Button Styling */
+.appointment-button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  width: calc(100% - 10px);
+  box-sizing: border-box;
+}
+
+.appointment-button:hover {
+  background-color: #0056b3;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Appointment Form Popup */
+.appointment-form-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: transparent;
+  border-radius: 10px;
+  width: 400px;
+  height: 620px;
+  overflow: hidden;
+}
+
+.appointment-form-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Appointment Details Popup */
+.appointment-details-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: transparent;
+  border-radius: 10px;
+  width: 400px;
+  height: 620px;
+  overflow: hidden;
+}
+
+.appointment-details-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.appointment-button.dr-smith {
+  background-color: #d61d98; /* Light red for Dr. Smith */
+  border: 1px solid #d61d98;
+}
+
+.appointment-button.dr-johnson {
+  background-color: #d64c15; /* Light green for Dr. Johnson */
+  border: 1px solid #d64c15;
+}
+
+.appointment-button.dr-lee {
+  background-color: #32d655; /* Light blue for Dr. Lee */
+  border: 1px solid #32d655;
 }

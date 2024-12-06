@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="AppointmentForm.css">
 </head>
 <body>
+  <div class="popup-overlay"></div>
   <div class="appointment-form-container">
     <div class="appointment-form">
       <button class="close-btn">✖</button>
@@ -28,14 +29,14 @@
         <!-- Appointment Time -->
         <label for="appointment-time">Appointment Time:</label>
         <div class="time-inputs">
-          <input type="text" id="start-time" value="9:00 AM" readonly>
+          <input type="text" id="start-time" readonly>
           <span>—</span>
-          <input type="text" id="end-time" value="10:00 AM" readonly>
+          <input type="text" id="end-time" readonly>
         </div>
         
         <!-- Doctor Name -->
         <label for="doctor-name">Doctor Name:</label>
-        <input type="text" id="doctor-name" value="Dr. David" readonly>
+        <input type="text" id="doctor-name" readonly>
         
         <!-- Appointment Type -->
         <label for="appointment-type">Appointment Type:</label>
@@ -58,7 +59,6 @@
       </form>
     </div>
   </div>
+  <script src="AppointmentForm.js"></script>
 </body>
 </html>
-
-   <!-- Doctor Name -->
