@@ -240,6 +240,7 @@ const hardcodedCalendars = {
       doctor: appointment.doctor_name,
       notes: appointment.notes,
       type: appointment.appointment_type,
+      status_: appointment.status_,
     });
   
     iframe.src = `AppointmentDetails.html?${query.toString()}`;

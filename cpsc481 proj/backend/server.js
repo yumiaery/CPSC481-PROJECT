@@ -30,9 +30,9 @@ db.connect((err) => {
 
 // Routes
 app.post("/appointments", (req, res) => {
-  const { patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type } = req.body;
+  const { patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type} = req.body;
 
-  const sql = "INSERT INTO appointments (patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  const sql = "INSERT INTO appointments (patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type, status_) VALUES (?, ?, ?, ?, ?, ?, ?, NULL)";
   db.query(
     sql,
     [patient_name, appointment_date, start_time, end_time, doctor_name, notes, appointment_type],
@@ -198,7 +198,7 @@ app.delete("/appointments", (req, res) => {
 
 //update from eidtable fields in deets page
 app.put("/appointments", (req, res) => {
-  const { id, patient_name, appointment_type, notes } = req.body;
+  const { id, patient_name, appointment_type, notes, status_ } = req.body;
 
   if (!id) {
     res.status(400).send("Appointment ID is required.");
@@ -207,11 +207,11 @@ app.put("/appointments", (req, res) => {
 
   const sql = `
     UPDATE appointments 
-    SET patient_name = ?, appointment_type = ?, notes = ? 
+    SET patient_name = ?, appointment_type = ?, notes = ?, status_ = ? 
     WHERE id = ?
   `;
 
-  db.query(sql, [patient_name, appointment_type, notes, id], (err, result) => {
+  db.query(sql, [patient_name, appointment_type, notes, status_, id], (err, result) => {
     if (err) {
       console.error("Error updating appointment:", err);
       res.status(500).send("Error updating appointment.");

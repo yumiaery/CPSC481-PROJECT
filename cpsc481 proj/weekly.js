@@ -163,7 +163,7 @@ async function renderAppointmentsWeekly() {
       } else if (appointment.doctor_name === "Dr. Lee") {
         appointmentButton.classList.add("dr-lee");
       }
-      
+
       appointmentButton.textContent = `${appointment.patient_name} (${appointment.doctor_name})`;
 
       // Add click event to open Appointment Details
@@ -197,6 +197,7 @@ function openAppointmentDetails(appointment) {
     doctor: appointment.doctor_name,
     notes: appointment.notes,
     type: appointment.appointment_type,
+    status_: appointment.status_,
   });
 
   iframe.src = `AppointmentDetails.html?${query.toString()}`;

@@ -33,6 +33,8 @@ function toggleEditMode() {
     document.getElementById("patient-name"),
     document.getElementById("appointment-type"),
     document.getElementById("notes"),
+    document.getElementById("status-no-show"),
+    document.getElementById("status-arrived")
   ];
 
   const rescheduleButton = document.querySelector(".reschedule-btn");
@@ -151,6 +153,18 @@ async function confirmChanges() {
   const appointmentType = document.getElementById("appointment-type").value;
   const notes = document.getElementById("notes").value;
 
+  // Retrieve the selected status value
+  const statusArrived = document.getElementById("status-arrived").checked;
+  const statusNoShow = document.getElementById("status-no-show").checked;
+
+  // Determine the status based on user selection
+  let status_ = "";
+  if (statusArrived) {
+    status_ = "Arrived";
+  } else if (statusNoShow) {
+    status_ = "No show";
+  }
+
   try {
     const response = await fetch("http://localhost:3000/appointments", {
       method: "PUT",
@@ -162,6 +176,7 @@ async function confirmChanges() {
         patient_name: patientName,
         appointment_type: appointmentType,
         notes: notes,
+        status_: status_,
       }),
     });
 
