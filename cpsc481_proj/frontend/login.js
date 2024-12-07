@@ -1,8 +1,8 @@
 // Hardcoded users
 const users = [
-    { username: "Rebecca Receptionist", password: "password1" },
-    { username: "Nelly Nurse", password: "password2" },
-    { username: "David Smith", password: "password3" },
+    { username: "RebeccaRebeccason", password: "password1" },
+    { username: "NellyNellyson", password: "password2" },
+    { username: "DavidSmith", password: "password3" },
 ];
 
 // Get references to form and error message

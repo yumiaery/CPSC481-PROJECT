@@ -85,3 +85,18 @@ window.addEventListener("click", (event) => {
     closeUserInfoPopup();
   }
 });
+
+
+// Define the changePassword function
+function changePassword() {
+  alert("Feature under development");
+}
+
+// Add event listener for the change password button
+document.addEventListener('DOMContentLoaded', () => {
+  const changePasswordButton = document.querySelector('.change-password-button');
+  if (changePasswordButton) {
+    changePasswordButton.addEventListener('click', changePassword);
+  }
+});
+
