@@ -24,6 +24,17 @@ function populateFields(params) {
   document.getElementById("doctor-name").value = params.get("doctor") || "N/A";
   document.getElementById("appointment-type").value = params.get("type") || "online"; // Default to 'online'
   document.getElementById("notes").value = params.get("notes") || "N/A";
+
+  // Populate status
+  const status = params.get("status_");
+  if (status === "Arrived") {
+    document.getElementById("status-arrived").checked = true;
+  } else if (status === "No show") {
+    document.getElementById("status-no-show").checked = true;
+  } else {
+    document.getElementById("status-arrived").checked = false;
+    document.getElementById("status-no-show").checked = false;
+  }
 }
 
 let isEditing = false;
