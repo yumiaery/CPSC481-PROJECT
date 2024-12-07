@@ -364,3 +364,71 @@ async function rescheduleAppointment(appointmentId, newDate, newTime, newEndTime
     alert("Failed to reschedule the appointment.");
   }
 }
+
+
+
+const appointments = [
+  {
+    patient: "Ehud Sharlin",
+    type: "In-Clinic",
+    date: "Thurs, Dec 12",
+    time: "11:00 AM - 12:00 PM",
+  },
+  {
+    patient: "Linda Johnson",
+    type: "Online",
+    date: "Tues, Nov. 5",
+    time: "12:00 PM - 1:00 PM",
+  },
+  {
+    patient: "Jane Smith",
+    type: "Online",
+    date: "Mon, Oct. 28",
+    time: "9:00 AM - 10:00 AM",
+  },
+];
+
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+// Function to filter and display search results
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+  searchResults.innerHTML = ""; // Clear previous results
+
+  if (query === "") {
+    searchResults.style.display = "none"; // Hide results if query is empty
+    return;
+  }
+
+  const filteredAppointments = appointments.filter((appt) =>
+    appt.patient.toLowerCase().includes(query)
+  );
+
+  if (filteredAppointments.length === 0) {
+    searchResults.innerHTML = `<div class="result-item">No results found</div>`;
+  } else {
+    filteredAppointments.forEach((appt) => {
+      const resultItem = document.createElement("div");
+      resultItem.className = "result-item";
+      resultItem.innerHTML = `
+        <strong>${appt.patient}</strong>
+        <span class="appointment-type ${
+          appt.type === "Online" ? "online" : "in-clinic"
+        }">[${appt.type}]</span><br>
+        ${appt.date}, ${appt.time}
+      `;
+      resultItem.onclick = () => alert(`Viewing details for ${appt.patient}`);
+      searchResults.appendChild(resultItem);
+    });
+  }
+
+  searchResults.style.display = "block"; // Show results
+});
+
+// Hide search results if clicking outside
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-container")) {
+    searchResults.style.display = "none";
+  }
+});
