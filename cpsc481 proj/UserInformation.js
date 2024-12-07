@@ -1,10 +1,11 @@
-const userName = sessionStorage.getItem("userName");
+document.addEventListener("DOMContentLoaded", function () {
+    // Get username from sessionStorage
+    const username = sessionStorage.getItem("username");
 
-// Check if user name exists in sessionStorage, otherwise use a default name or handle the error
-if (userName) {
-    // Update the name in the popup
-    document.getElementById('userName').textContent = userName;
-} else {
-    // If no user name is found, handle this case (e.g., redirect to login or show a placeholder)
-    document.getElementById('userName').textContent = "Guest";
-}
+    // Check if the username exists in sessionStorage
+    if (username) {
+        document.getElementById('username').textContent = username;
+    } else {
+        document.getElementById('username').textContent = "Guest";
+    }
+});

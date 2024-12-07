@@ -244,3 +244,87 @@ body {
   background-color: #32d655; /* Light blue for Dr. Lee */
   border: 1px solid #32d655;
 }
+
+
+/* Display menu when open */
+#profileMenu.open {
+  display: block; /* Show the menu when "open" class is added */
+}
+
+/* Styling for dropdown menu items */
+#profile  Menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+#profileMenu a:hover {
+  background-color: #60d4e2;
+  color: white;
+}
+
+/* Style for the pop-up window */
+.popup-window {
+  display: none; /* Hide the popup by default */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: #eaf8fc; /* Light blue background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center-align text */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+/* Style for the title */
+.popup-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the user name text */
+.user-name {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+.change-password-button, .close-popup-button {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.change-password-button {
+  background-color: #f3f3f3;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.change-password-button:hover {
+  background-color: #26c6da;
+}
+
+.change-password-button .lock-icon {
+  margin-right: 5px;
+}
+
+.close-popup-button {
+  background-color: #f44336;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.close-popup-button:hover {
+  background-color: #e57373;
+}
