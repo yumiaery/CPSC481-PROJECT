@@ -1,8 +1,8 @@
 // Hardcoded users
 const users = [
-    { username: "Rebecca.R", password: "password1" },
-    { username: "Nelly.N", password: "password2" },
-    { username: "David.D", password: "password3" },
+    { username: "Rebecca Receptionist", password: "password1" },
+    { username: "Nelly Nurse", password: "password2" },
+    { username: "David Smith", password: "password3" },
 ];
 
 // Get references to form and error message
@@ -15,6 +15,7 @@ loginForm.addEventListener("submit", function (event) {
 
     // Get entered username and password
     const username = document.getElementById("username").value.trim();
+    sessionStorage.setItem("username", username); // Store username
     const password = document.getElementById("password").value.trim();
 
     // Check if the credentials match any hardcoded user

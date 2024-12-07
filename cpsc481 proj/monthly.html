@@ -69,11 +69,22 @@
     <iframe src="" class="appointment-details-iframe"></iframe>
   </div>
 
+  <!-- Hidden User Information Pop-Up -->
+  <div id="userInfoPopup" class="popup-window">
+    <h2 class="popup-title">User Information</h2>
+    <p class="user-name">Name: <strong id="username">Loading...</strong></p>
+    <button class="change-password-button">
+      <span class="lock-icon">🔒</span>
+      Change Password
+    </button>
+    <button id="closePopup" class="close-popup-button">Close</button>
+  </div>
 
   <script src="profile.js"></script>
   <script src="navigation.js"></script>
   <script src="monthly.js"></script>
   <script src="logout.js"></script>
+  <script src="UserInformation.js"></script>
 
 </body>
 </html>
