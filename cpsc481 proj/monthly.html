@@ -12,7 +12,10 @@
 
     <!-- Header -->
     <div class="calendar-header">
-      <input type="text" placeholder="Search Patients..." class="search-bar">
+      <div class="search-container">
+        <input type="text" placeholder="Search Patients..." class="search-bar" id="searchInput">
+        <div id="searchResults" class="search-results"></div>
+      </div>
       <div class="filter-container">
         <span>Filters:</span>
         <select id="doctorFilter">

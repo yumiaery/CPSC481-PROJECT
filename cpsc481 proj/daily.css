@@ -294,3 +294,49 @@ body {
 .close-popup-button:hover {
   background-color: #e57373;
 }
+
+
+/* Style for the search results dropdown */
+.search-container {
+  position: relative;
+  display: inline-block;
+}
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: none; /* Initially hidden */
+}
+.search-results .result-item {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+}
+.search-results .result-item:last-child {
+  border-bottom: none;
+}
+.search-results .result-item:hover {
+  background-color: #f0f0f0;
+}
+.search-results .appointment-type {
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 10px;
+}
+.search-container .search-bar {
+  width: 400px; /* Customize this as needed */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
