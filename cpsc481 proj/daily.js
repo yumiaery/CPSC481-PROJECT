@@ -1,6 +1,6 @@
 let selectedDoctor = ""; // Default: show all doctors
 
-
+let appointmentFormClickEnabled = true; // Allow click events by default
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get("date");
 
@@ -156,6 +156,7 @@ async function renderAppointments() {
       slot.appendChild(appointmentButton);
     }
   });
+  appointmentFormClickEnabled = true
 }
 
 // Open appointment form in the iframe
@@ -172,8 +173,10 @@ function openAppointmentForm(appointment = {}) {
   });
 
   iframe.src = `AppointmentForm.html?${query.toString()}`;
-  appointmentFormContainer.style.display = "block";
-  popupOverlay.style.display = "block";
+  if (appointmentFormClickEnabled) {
+    appointmentFormContainer.style.display = "block";
+    popupOverlay.style.display = "block";
+  }
 }
 
 
@@ -281,5 +284,83 @@ function attachDoctorFilterListener() {
     });
   } else {
     console.error("Doctor filter dropdown not found in the DOM.");
+  }
+}
+
+window.addEventListener("message", (event) => {
+  if (event.data.action === "reschedule") {
+    const { appointmentDetails } = event.data;
+
+    console.log("Reschedule action received:", appointmentDetails);
+
+    // Disable clicks for opening new appointment forms
+    appointmentFormClickEnabled = false;
+
+    // Highlight available slots
+    highlightAvailableSlots();
+
+    // Attach click events to slots for selecting a new time
+    document.querySelectorAll(".calendar-grid > div:nth-child(even)").forEach((slot) => {
+      slot.addEventListener("click", () => {
+        const selectedTime = slot.previousElementSibling.textContent.trim();
+        const selectedDate = currentDate.toISOString().split("T")[0];
+        const endTime = calculateEndTime(selectedTime);
+        appointmentFormClickEnabled = false;
+
+        // Perform rescheduling
+        rescheduleAppointment(appointmentDetails.id, selectedDate, selectedTime, endTime);
+
+        // Clear slot listeners and highlights after rescheduling
+        clearSlotListeners();
+
+        // Refresh the appointments in the daily view
+        renderAppointments();
+      });
+    });
+  }
+});
+
+// Highlight available slots
+function highlightAvailableSlots() {
+  document.querySelectorAll(".calendar-grid > div:nth-child(even)").forEach((slot) => {
+    slot.classList.add("highlight-slot");
+  });
+}
+
+// Clear slot listeners and highlights
+function clearSlotListeners() {
+  document.querySelectorAll(".calendar-grid > div:nth-child(even)").forEach((slot) => {
+    slot.classList.remove("highlight-slot");
+    const newSlot = slot.cloneNode(true);
+    slot.parentNode.replaceChild(newSlot, slot);
+  });
+}
+
+// Reschedule the appointment
+async function rescheduleAppointment(appointmentId, newDate, newTime, newEndTime) {
+  try {
+    const response = await fetch("http://localhost:3000/appointments_reschedule", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: appointmentId,
+        appointment_date: newDate,
+        start_time: newTime,
+        end_time: newEndTime,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to reschedule the appointment.");
+    }
+
+    alert("Appointment rescheduled successfully.");
+    appointmentFormClickEnabled = true; // Re-enable appointment form clicks
+    window.parent.postMessage({ action: "refresh", success: true }, "*");
+  } catch (error) {
+    console.error("Error rescheduling appointment:", error);
+    alert("Failed to reschedule the appointment.");
   }
 }

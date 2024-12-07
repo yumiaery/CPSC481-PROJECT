@@ -223,6 +223,33 @@ app.put("/appointments", (req, res) => {
   });
 });
 
+//update from eidtable fields in deets page
+app.put("/appointments_reschedule", (req, res) => {
+  const { id, appointment_date, start_time, end_time} = req.body;
+  if (!id) {
+    res.status(400).send("Appointment ID is required.");
+    return;
+  }
+
+  const sql = `
+    UPDATE appointments 
+    SET appointment_date = ?, start_time = ?, end_time = ? 
+    WHERE id = ?
+  `;
+
+  db.query(sql, [appointment_date, start_time, end_time, id], (err, result) => {
+    if (err) {
+      console.error("Error rescheduling appointment:", err);
+      res.status(500).send("Error rescheduling appointment.");
+    } else if (result.affectedRows === 0) {
+      res.status(404).send("Appointment not found.");
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
+
+
 
 
 // Start server

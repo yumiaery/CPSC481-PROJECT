@@ -205,3 +205,9 @@ body {
   background-color: #32d655; /* Light blue for Dr. Lee */
   border: 1px solid #32d655;
 }
+
+.highlight-slot {
+  background-color: #e0f7fa;
+  border: 1px dashed #ffa500;
+  cursor: pointer;
+}
