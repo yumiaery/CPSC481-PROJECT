@@ -124,13 +124,11 @@ async function renderAppointmentsWeekly() {
   slots.forEach((slot, index) => {
     slot.innerHTML = ""; // Clear slot content
 
-    // Add click listener for empty slots
     slot.addEventListener("click", () => {
       const slotDate = slot.dataset.date;
       const slotTime = timeDivs[index % timeDivs.length].textContent.trim();
       const endTime = calculateEndTime(slotTime);
       const selectedDoctor = document.getElementById("doctorFilter").value || "No Doctor Selected";
-
       openAppointmentForm({
         appointment_date: slotDate,
         start_time: slotTime,
@@ -140,7 +138,7 @@ async function renderAppointmentsWeekly() {
     });
   });
 
-  // Map appointments to time slots
+ 
   appointments.forEach((appointment) => {
     const appointmentDate = new Date(appointment.appointment_date).toISOString().split("T")[0];
     const normalizedTime = normalizeTime(appointment.start_time);
@@ -293,6 +291,8 @@ function renderWeek() {
 
     slot.dataset.date = currentDate.toISOString().split("T")[0];
     slot.dataset.time = timeLabels[rowIndex];
+    slot.dataset.end_time = timeLabels[rowIndex+1]
+    
     slot.textContent = "";
     slot.removeAttribute("data-appointment");
   });
@@ -382,7 +382,7 @@ function handleSlotClick(slot) {
     time: startTime,
     endTime: endTime,
     doctor: encodeURIComponent(selectedDoctor || "No Doctor Selected"),
-  });
+    });
 }
 
 // Open popup with appointment form
@@ -427,4 +427,79 @@ function calculateEndTime(startTime) {
 function getStartOfWeek() {
   const startOfWeek = predefinedWeeks[currentWeekIndex].split(" - ")[0];
   return new Date(startOfWeek);
+}
+
+window.addEventListener("message", (event) => {
+  if (event.data.action === "reschedule") {
+    const { appointmentDetails } = event.data;
+
+    console.log("Reschedule action received:", appointmentDetails);
+
+    appointmentFormClickEnabled = false;
+
+    // Highlight available slots (optional)
+    highlightAvailableSlots();
+
+    // Attach click event to slots to select a new time
+    document.querySelectorAll(".calendar-grid > div:not(.weekday):not(.time)").forEach((slot) => {
+      slot.addEventListener("click", () => {
+        const selectedDate = slot.dataset.date;
+        const selectedTime = slot.dataset.time;
+        const selectedEndTime = slot.dataset.end_time
+
+        // Send an update request to the backend
+        rescheduleAppointment(appointmentDetails.id, selectedDate, selectedTime, selectedEndTime);
+        appointmentFormClickEnabled = false;
+        // Remove event listeners after selection
+        clearSlotListeners();
+
+        // Refresh the calendar
+        renderAppointmentsWeekly();
+      });
+    });
+  }
+});
+
+// Helper: Highlight available slots
+function highlightAvailableSlots() {
+  document.querySelectorAll(".calendar-grid > div:not(.weekday):not(.time)").forEach((slot) => {
+    slot.classList.add("highlight-slot");
+  });
+}
+
+// Helper: Clear slot listeners
+function clearSlotListeners() {
+  document.querySelectorAll(".calendar-grid > div:not(.weekday):not(.time)").forEach((slot) => {
+    slot.classList.remove("highlight-slot");
+    const newSlot = slot.cloneNode(true);
+    slot.parentNode.replaceChild(newSlot, slot);
+  });
+}
+
+async function rescheduleAppointment(appointmentId, newDate, newTime, newEndTime) {
+  try {
+    const response = await fetch("http://localhost:3000/appointments_reschedule", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: appointmentId,
+        appointment_date: newDate,
+        start_time: newTime,
+        end_time: newEndTime
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to reschedule the appointment.");
+    }
+
+    alert("Appointment rescheduled successfully.");
+    appointmentFormClickEnabled = false;
+    window.parent.postMessage({ action: "refresh", success: true }, "*");
+  } catch (error) {
+    console.error("Error rescheduling appointment:", error);
+    alert("Failed to reschedule the appointment.");
+  }
 }

@@ -216,3 +216,13 @@ body {
   background-color: #32d655; /* Light blue for Dr. Lee */
   border: 1px solid #32d655;
 }
+
+.highlight-slot {
+  background-color: #e0f7fa; /* Light blue to indicate availability */
+  border: 2px dashed #007bff; /* Dashed border for emphasis */
+  cursor: pointer;
+}
+
+.highlight-slot:hover {
+  background-color: #b2ebf2; /* Slightly darker blue on hover */
+}

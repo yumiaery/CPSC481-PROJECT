@@ -196,3 +196,27 @@ async function confirmChanges() {
     alert("Failed to update the appointment.");
   }
 }
+
+document.querySelector(".reschedule-btn").addEventListener("click", () => {
+  const params = new URLSearchParams(window.location.search);
+
+  const appointmentDetails = {
+    id: params.get("id"),
+    patient_name: params.get("patient_name"),
+    notes: params.get("notes"),
+    doctor: params.get("doctor"),
+    appointment_type: params.get("type"),
+  };
+
+  // Notify parent to enable rescheduling
+  window.parent.postMessage(
+    {
+      action: "reschedule",
+      appointmentDetails,
+    },
+    "*"
+  );
+
+  // Close the details popup
+  window.parent.postMessage({ action: "close" }, "*");
+});
