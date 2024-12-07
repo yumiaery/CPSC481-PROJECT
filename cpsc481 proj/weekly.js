@@ -28,6 +28,8 @@ const predefinedWeeks = [
 ];
 let currentWeekIndex = 14; // Default to the first week
 
+let appointmentFormClickEnabled = true; // Allow click events by default
+
 let selectedDoctor = ""; // Track the currently selected doctor
 function normalizeTime(time) {
   const [hour, minutePart] = time.split(":");
@@ -106,6 +108,7 @@ async function fetchWeeklyAppointments(startDate, endDate) {
 
 
 async function renderAppointmentsWeekly() {
+  
   const weekRange = predefinedWeeks[currentWeekIndex];
   const [weekStart] = weekRange.split(" - ");
   const startDate = new Date(weekStart);
@@ -173,6 +176,7 @@ async function renderAppointmentsWeekly() {
       slot.appendChild(appointmentButton); // Add button to the slot
     }
   });
+  appointmentFormClickEnabled = true
 }
 
 
@@ -199,8 +203,10 @@ function openAppointmentDetails(appointment) {
   });
 
   iframe.src = `AppointmentDetails.html?${query.toString()}`;
-  appointmentDetailsContainer.style.display = "block";
-  popupOverlay.style.display = "block";
+  if (appointmentFormClickEnabled) {
+    appointmentDetailsContainer.style.display = "block";
+    popupOverlay.style.display = "block";
+  }
 }
 
 // Close popup when overlay is clicked
@@ -246,8 +252,10 @@ function openAppointmentForm(appointment = {}) {
 
   // Set iframe source with the query parameters
   iframe.src = `AppointmentForm.html?${query.toString()}`;
-  appointmentFormContainer.style.display = "block";
-  popupOverlay.style.display = "block";
+  if (appointmentFormClickEnabled) {
+    appointmentFormContainer.style.display = "block";
+    popupOverlay.style.display = "block";
+  }
 }
 
 
@@ -377,6 +385,7 @@ function handleSlotClick(slot) {
   const endTime = calculateEndTime(startTime);
 
   // Show popup with iframe
+
   openPopupWithAppointmentForm({
     date: slot.dataset.date,
     time: startTime,
@@ -387,11 +396,17 @@ function handleSlotClick(slot) {
 
 // Open popup with appointment form
 function openPopupWithAppointmentForm(appointment) {
+  console.log("I am you")
   const iframe = document.querySelector(".appointment-form-iframe");
   iframe.src = `AppointmentForm.html?date=${appointment.date}&time=${appointment.time}&endTime=${appointment.endTime}&doctor=${appointment.doctor}`;
 
-  document.querySelector(".appointment-form-container").style.display = "block";
-  document.querySelector(".popup-overlay").style.display = "block";
+    console.log("Appointment form clicks are temporarily disabled.");
+    if (appointmentFormClickEnabled) {
+      document.querySelector(".appointment-form-container").style.display = "block";
+      document.querySelector(".popup-overlay").style.display = "block"; 
+    }
+    
+  
 }
 
 
@@ -442,20 +457,21 @@ window.addEventListener("message", (event) => {
 
     // Attach click event to slots to select a new time
     document.querySelectorAll(".calendar-grid > div:not(.weekday):not(.time)").forEach((slot) => {
-      slot.addEventListener("click", () => {
+      slot.addEventListener("click", (event) => {
         const selectedDate = slot.dataset.date;
         const selectedTime = slot.dataset.time;
         const selectedEndTime = slot.dataset.end_time
-
+        appointmentFormClickEnabled = false;
         // Send an update request to the backend
         rescheduleAppointment(appointmentDetails.id, selectedDate, selectedTime, selectedEndTime);
-        appointmentFormClickEnabled = false;
+        
         // Remove event listeners after selection
         clearSlotListeners();
-
-        // Refresh the calendar
         renderAppointmentsWeekly();
+        
       });
+      
+      
     });
   }
 });
