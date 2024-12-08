@@ -573,13 +573,16 @@ searchInput.addEventListener("input", () => {
         }">[${appt.type}]</span><br>
         ${appt.date}, ${appt.time}
       `;
-      resultItem.onclick = () => alert(`Viewing details for ${appt.patient}`);
+      resultItem.onclick = () => selectPatient();
       searchResults.appendChild(resultItem);
     });
   }
-
+  
   searchResults.style.display = "block"; // Show results
-});
+  
+  function selectPatient() {
+    alert("Feature under development");
+  }
 
 // Hide search results if clicking outside
 document.addEventListener("click", (e) => {
