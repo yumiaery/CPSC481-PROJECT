@@ -1,6 +1,6 @@
 # CalgaryCare
 
-This is our project fro CPSC 481: Human-Computer Interaction course. We are Group 4 of Tutorial 7. This project is a web-based **appointment scheduling system** designed for front-line staff in a medical clinic setting to manage and schedule patient appointments efficiently.
+This is our project for CPSC 481: Human-Computer Interaction course. We are Group 4 of Tutorial 7. This project is a web-based **appointment scheduling system** designed for front-line staff in a medical clinic setting to manage and schedule patient appointments efficiently.
 
 ---
 
