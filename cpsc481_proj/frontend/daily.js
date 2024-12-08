@@ -248,12 +248,11 @@ function openAppointmentDetails(appointment) {
   const query = new URLSearchParams({
     id: appointment.id, // Pass the unique appointment ID
     patient_name: appointment.patient_name,
-    date: new Date(appointment.appointment_date).toISOString().split("T")[0],
-    // date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
-    //   month: "short",
-    //   day: "numeric",
-    //   year: "numeric",
-    // }),
+    date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
     time: appointment.start_time,
     endTime: appointment.end_time,
     doctor: appointment.doctor_name,
@@ -419,17 +418,13 @@ searchInput.addEventListener("input", () => {
         }">[${appt.type}]</span><br>
         ${appt.date}, ${appt.time}
       `;
-      resultItem.onclick = () => selectPatient();
+      resultItem.onclick = () => alert(`Viewing details for ${appt.patient}`);
       searchResults.appendChild(resultItem);
     });
   }
-  
+
   searchResults.style.display = "block"; // Show results
-  
-  function selectPatient() {
-    alert("Feature under development");
-  }
-  
+});
 
 // Hide search results if clicking outside
 document.addEventListener("click", (e) => {
