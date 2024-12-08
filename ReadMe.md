@@ -144,11 +144,11 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
       
     ### Detailed Steps (Same for all view):
 
-      - Step 1: Click the desired appointment whose details you wish to view.
-      - Step 2: Click on the pencil icon to enable editing mode, click again to disable editing mode.
-      - Step 4: Once done editinng the desired details
-        - Click on **Confirm Changes** to save the changes.
-        - Alternatively, clicking **Discard Changes** to trash the changes u made and keep the details as is.   
+        - Step 1: Click the desired appointment whose details you wish to view.
+        - Step 2: Click on the pencil icon to enable editing mode, click again to disable editing mode.
+        - Step 4: Once done editinng the desired details
+          - Click on **Confirm Changes** to save the changes.
+          - Alternatively, clicking **Discard Changes** to trash the changes u made and keep the details as is.   
     
 12. **Appointment Details**:
    - Click a booked appointment to view its details in a pop-up window.
