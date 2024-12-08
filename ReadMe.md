@@ -137,24 +137,25 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
       - Step 4: A confirmation popup will come up.
         - Click on **Cancel Appointment** to cancel the desired appointment.
         - Alternatively, clicking **Go Back** will take you back to the "Appointment Details" page.
+        
+  10. **Edit Detail**:
+   - This is for the use case that either patient name was enetered wrong, or appointment type is changed, or nurse/doctor has notes to add on before/after appointment and to track the status of the appointment.
+   - Basically not for changing appointment date, time or doctor.
      
- 10. **Edit Details**:
-     - This is for the use case that either patient name was enetered wrong, or appointment type is changed, or nurse/doctor has notes to add on before/after appointment and to track the status of the appointment.
-     - Basically not for changing appointment date, time or doctor.
-      
-     ### Detailed Steps (Same for all view):
+   ### Detailed Steps (Same for all view):
 
-        - Step 1: Click the desired appointment whose details you wish to view.
-        - Step 2: Click on the pencil icon to enable editing mode, click again to disable editing mode.
-        - Step 4: Once done editinng the desired details
+    - **Daily View**:
+      - Step 1: Click the desired appointment whose details you wish to view.
+      - Step 2: Click on the pencil icon to enable editing mode, click again to disable editing mode.
+      - Step 3: Once done editinng the desired details
           - Click on **Confirm Changes** to save the changes.
-          - Alternatively, clicking **Discard Changes** to trash the changes u made and keep the details as is.   
+          - Alternatively, clicking **Discard Changes** to trash the changes u made and keep the details as is.
     
-12. **Appointment Details**:
+  11. **Appointment Details**:
    - Click a booked appointment to view its details in a pop-up window.
    - Options for editing, rescheduling or canceling will be available as mentioned in the steps above.
 
-12. **Search Patient**:
+  12. **Search Patient**:
    - You can search a patient with a name in the Search bar at the top left of the page.
 
 ---
