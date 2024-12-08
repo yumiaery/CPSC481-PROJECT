@@ -47,11 +47,11 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
    - You can do this only in the daily or weekly view, since you can view what time you are booking it for
    - **Detailed steps**
    -    Daily view:
-   -          1)Click the arrow buttons to choose a day to book an appointment on.
-   -          2)In the "Filters" drop down choose a doctor you wish to book an appointment with.
-   -          3)Click on a free and desired time slot and the "Add appointment" form will appear.
-   -          4)The date, time and Doctor information will be set already. You just have to enter the other details and click on confirm to book the appointment.
-   -          5)Alternatively, clicking cancel will discard the form.
+             1)Click the arrow buttons to choose a day to book an appointment on.
+             2)In the "Filters" drop down choose a doctor you wish to book an appointment with.
+             3)Click on a free and desired time slot and the "Add appointment" form will appear.
+             4)The date, time and Doctor information will be set already. You just have to enter the other details and click on confirm to book the appointment.
+             5)Alternatively, clicking cancel will discard the form.
    -    Weekly view:
    -          1)Click the arrow buttons to choose a week to book an appointment on.
    -          2)In the "Filters" drop down choose a doctor you wish to book an appointment with.
