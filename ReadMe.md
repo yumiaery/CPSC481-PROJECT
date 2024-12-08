@@ -139,10 +139,10 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
         - Alternatively, clicking **Go Back** will take you back to the "Appointment Details" page.
      
  10. **Edit Details**:
-    - This is for the use case that either patient name was enetered wrong, or appointment type is changed, or nurse/doctor has notes to add on before/after appointment and to track the status of the appointment.
-    - Basically not for changing appointment date, time or doctor.
+     - This is for the use case that either patient name was enetered wrong, or appointment type is changed, or nurse/doctor has notes to add on before/after appointment and to track the status of the appointment.
+     - Basically not for changing appointment date, time or doctor.
       
-    ### Detailed Steps (Same for all view):
+     ### Detailed Steps (Same for all view):
 
         - Step 1: Click the desired appointment whose details you wish to view.
         - Step 2: Click on the pencil icon to enable editing mode, click again to disable editing mode.
