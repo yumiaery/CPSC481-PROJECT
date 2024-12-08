@@ -45,28 +45,29 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
    - You can add an appointment by selecting a free time slot on the calendar and filling in the required details.
    - This allows you to book a slot for a patient with the desired doctor at a specific time.
    - You can do this only in the daily or weekly view, since you can view what time you are booking it for
+   
    ### Detailed Steps:
 
-- **Daily View**:
-  - Step 1: Click the arrow buttons to choose a day to book an appointment on.
-  - Step 2: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
-  - Step 3: Click on a free and desired time slot, and the "Add Appointment" form will appear.
-  - Step 4: The date, time, and doctor information will already be set.
-    - Enter other details and click **Confirm** to book the appointment.
-    - Alternatively, clicking **Cancel** will discard the form.
-
-- **Weekly View**:
-  - Step 1: Click the arrow buttons to choose a week to book an appointment on.
-  - Step 2: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
-  - Step 3: Click on a free and desired time slot, and the "Add Appointment" form will appear.
-  - Step 4: The date, time, and doctor information will already be set.
-    - Enter other details and click **Confirm** to book the appointment.
-    - Alternatively, clicking **Cancel** will discard the form.
-
-- **Monthly View**:
-  - Step 1: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
-  - Step 2: Click on a specific day, and it will redirect you to the **Daily View** for that date.
-  - Step 3: Follow the steps for **Daily View** mentioned above to add an appointment.
+  - **Daily View**:
+    - Step 1: Click the arrow buttons to choose a day to book an appointment on.
+    - Step 2: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
+    - Step 3: Click on a free and desired time slot, and the "Add Appointment" form will appear.
+    - Step 4: The date, time, and doctor information will already be set.
+      - Enter other details and click **Confirm** to book the appointment.
+      - Alternatively, clicking **Cancel** will discard the form.
+  
+  - **Weekly View**:
+    - Step 1: Click the arrow buttons to choose a week to book an appointment on.
+    - Step 2: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
+    - Step 3: Click on a free and desired time slot, and the "Add Appointment" form will appear.
+    - Step 4: The date, time, and doctor information will already be set.
+      - Enter other details and click **Confirm** to book the appointment.
+      - Alternatively, clicking **Cancel** will discard the form.
+  
+  - **Monthly View**:
+    - Step 1: In the "Filters" dropdown, choose a doctor you wish to book an appointment with.
+    - Step 2: Click on a specific day, and it will redirect you to the **Daily View** for that date.
+    - Step 3: Follow the steps for **Daily View** mentioned above to add an appointment.
  
 
  4. **Reschedule Appointment**:
