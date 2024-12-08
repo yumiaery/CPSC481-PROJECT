@@ -6,6 +6,8 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
 
 ## Table of Contents
 - [Access and Usage](#access-and-usage)
+  - [How to Access](#how-to-access)
+  - [How to Use](#how-to-use)
 - [Platform and Display Requirements](#platform-and-display-requirements)
 
 ---
@@ -64,6 +66,7 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
  4. **Reschedule Appointment**:
    - Easily reschedule an existing appointment by selecting a new available time slot.
    - Rescheduling helps accommodate patient or doctor availability changes efficiently.
+   - 
 
  5. **Cancel Appointment**:
    - Appointments can be canceled if they are no longer required.
