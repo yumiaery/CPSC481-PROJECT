@@ -76,6 +76,11 @@ body {
   border-radius: 5px;
 }
 
+.view-tabs .tab:hover {
+  background-color: #aaa;
+  color: #fff;
+}
+
 .view-tabs .tab.active {
   background-color: #aaa;
   color: #fff;
