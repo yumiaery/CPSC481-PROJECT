@@ -14,7 +14,7 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
 
 ### How to Access:
 1. Open your preferred browser (**Google Chrome** recommended).
-2. Navigate to the hosted application using the provided URL: http://ec2-44-243-40-96.us-west-2.compute.amazonaws.com (**make sure to kee it http and not https**)
+2. Navigate to the hosted application using the provided URL: http://ec2-44-243-40-96.us-west-2.compute.amazonaws.com (**make sure to keep it http and not https**)
 3. Login credentials:
    Currently we have 3 users. You can use either one of these 3 credentials to log in to the system.
    
@@ -29,6 +29,65 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
 - **User 3**:
   **Username**: DavidSmith
   **Password**: password3
+
+ ### How to Use:
+ 1. **Access the System**:
+   - Navigate to the hosted application URL: http://ec2-44-243-40-96.us-west-2.compute.amazonaws.com .
+   - Log in using one of the 3 user credentials provided above.
+
+ 2. **Filtering**:
+   - Use the "Filters" dropdown to filter appointments by specific doctors.
+   - You can also view the availability of a selected doctor by observing their schedule in the calendar view, which highlights all booked and free time slots.
+     
+ 3. **Add Appointment**:
+   - You can add an appointment by selecting a free time slot on the calendar and filling in the required details.
+   - This allows you to book a slot for a patient with the desired doctor at a specific time.
+   - You can do this only in the daily or weekly view, since you can view what time you are booking it for
+   - **Detailed steps**
+   -    Daily view:
+   -          1)Click the arrow buttons to choose a day to book an appointment on.
+   -          2)In the "Filters" drop down choose a doctor you wish to book an appointment with.
+   -          3)Click on a free and desired time slot and the "Add appointment" form will appear.
+   -          4)The date, time and Doctor information will be set already. You just have to enter the other details and click on confirm to book the appointment.
+   -          5)Alternatively, clicking cancel will discard the form.
+   -    Weekly view:
+   -          1)Click the arrow buttons to choose a week to book an appointment on.
+   -          2)In the "Filters" drop down choose a doctor you wish to book an appointment with.
+   -          3)Click on a free and desired time slot and the "Add appointment" form will appear.
+   -          4)The date, time and Doctor information will be set already. You just have to enter the other details and click on confirm to book the appointment.
+   -          5)Alternatively, clicking cancel will discard the form.
+   -     Monthly view:
+   -          1)In the "Filters" drop down choose a doctor you wish to book an appointment with.
+   -          2)Click on a free and desired time day and it will redirect u to the daily view for that date.
+   -          3)You can then follow the steps for daily view mentioned above to add an appointment. 
+
+ 4. **Reschedule Appointment**:
+   - Easily reschedule an existing appointment by selecting a new available time slot.
+   - Rescheduling helps accommodate patient or doctor availability changes efficiently.
+
+ 5. **Cancel Appointment**:
+   - Appointments can be canceled if they are no longer required.
+   - The cancellation is logged, and the time slot becomes available for booking by others.
+   - A confirmation step prevents accidental cancellations.
+
+ 6. **Appointment Details**:
+   - Click a booked appointment to view its details in a pop-up window.
+   - Options for editing, rescheduling or canceling will be available.
+
+ 7. **Shift between Daily/Weekly/Monthly view**:
+   - You can search a patient with a name in the Search bar at the top left of the page.
+     
+ 8. **Daily View**:
+   - Use the "Daily" tab to view and manage appointments for a single day.
+     
+ 9. **Weekly View**:
+   - Switch to the "Weekly" tab to see and manage a week-long overview of appointments.
+
+ 10. **Monthly View**:
+   - Use the "Monthly" tab to access a calendar-style overview.
+  
+ 11. **Search Patient**:
+   - You can search a patient with a name in the Search bar at the top left of the page.
 
 ---
 
