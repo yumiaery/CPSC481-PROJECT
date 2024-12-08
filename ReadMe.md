@@ -1,6 +1,6 @@
 # CalgaryCare
 
-This is our project for CPSC 481: Human-Computer Interaction course. We are Group 4 of Tutorial 7. This project is a web-based **appointment scheduling system** designed for front-line staff in a medical clinic setting to manage and schedule patient appointments efficiently.
+This is our project for CPSC 481: Human-Computer Interaction course. We are Group 4 of Tutorial 7. This project is a web-based **appointment scheduling system** prototype designed for front-line staff in a medical clinic setting to manage and schedule patient appointments efficiently.
 
 ---
 
@@ -58,7 +58,7 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
  7. **Add Appointment**:
    - You can add an appointment by selecting a free time slot on the calendar and filling in the required details.
    - This allows you to book a slot for a patient with the desired doctor at a specific time.
-   - You can do this only in the daily or weekly view, since you can view what time you are booking it for
+   - You can do this only in the daily or weekly view, since you can view what time you are booking it for. For the monthly view, clicking on the desired day to take you to that day's daily view will allow you to book appointments.
    
    ### Detailed Steps:
 
