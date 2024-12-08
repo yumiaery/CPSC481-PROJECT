@@ -6,7 +6,7 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
 
 ## Table of Contents
 - [Access and Usage](#access-and-usage)
-- [Platform and Display Requirements] (#platform-and-display-requirements)
+- [Platform and Display Requirements](#platform-and-display-requirements)
 
 ---
 
