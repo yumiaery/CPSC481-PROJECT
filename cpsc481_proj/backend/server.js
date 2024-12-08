@@ -12,9 +12,9 @@ app.use(cors());
 
 // MySQL connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root", 
+  host: "cpsc-481-db.crm6gmu4mtkq.us-west-2.rds.amazonaws.com",
+  user: "admin",
+  password: "cpsc481_2024", 
   database: "cpsc_481",
 });
 
@@ -254,5 +254,5 @@ app.put("/appointments_reschedule", (req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://44.243.40.96:${port}`);
 });

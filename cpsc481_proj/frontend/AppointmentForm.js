@@ -101,7 +101,7 @@ document.querySelector(".confirm-btn").addEventListener("click", (event) => {
   console.log(patientName)
 
   // Send the appointment data to the backend
-  fetch("http://localhost:3000/appointments", {
+  fetch("http://44.243.40.96:3000/appointments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

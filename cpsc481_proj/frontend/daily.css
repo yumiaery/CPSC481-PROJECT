@@ -340,3 +340,8 @@ body {
   border-radius: 5px;
   font-size: 1rem;
 }
+
+.time-slot:hover {
+  background-color: #b2ebf2;
+  cursor: pointer;
+}

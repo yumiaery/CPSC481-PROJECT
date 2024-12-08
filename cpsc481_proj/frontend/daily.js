@@ -80,7 +80,7 @@ async function fetchAppointments(date) {
     const queryParams = new URLSearchParams({ date });
     if (selectedDoctor) queryParams.append("doctor", selectedDoctor); // Add doctor filter if selected
 
-    const response = await fetch(`http://localhost:3000/appointments?${queryParams.toString()}`);
+    const response = await fetch(`http://44.243.40.96:3000/appointments?${queryParams.toString()}`);
     if (!response.ok) throw new Error("Failed to fetch appointments");
 
     return await response.json();
@@ -339,7 +339,7 @@ function clearSlotListeners() {
 // Reschedule the appointment
 async function rescheduleAppointment(appointmentId, newDate, newTime, newEndTime) {
   try {
-    const response = await fetch("http://localhost:3000/appointments_reschedule", {
+    const response = await fetch("http://44.243.40.96:3000/appointments_reschedule", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

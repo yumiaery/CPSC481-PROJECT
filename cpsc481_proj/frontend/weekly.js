@@ -96,7 +96,7 @@ async function fetchWeeklyAppointments(startDate, endDate) {
     const queryParams = new URLSearchParams({ start_date: startDate, end_date: endDate });
     if (selectedDoctor) queryParams.append("doctor", selectedDoctor);
 
-    const response = await fetch(`http://localhost:3000/appointmentsWeekly?${queryParams.toString()}`);
+    const response = await fetch(`http://44.243.40.96:3000/appointmentsWeekly?${queryParams.toString()}`);
     if (!response.ok) throw new Error("Failed to fetch weekly appointments");
 
     return await response.json();
@@ -494,7 +494,7 @@ function clearSlotListeners() {
 
 async function rescheduleAppointment(appointmentId, newDate, newTime, newEndTime) {
   try {
-    const response = await fetch("http://localhost:3000/appointments_reschedule", {
+    const response = await fetch("http://44.243.40.96:3000/appointments_reschedule", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -131,8 +131,19 @@ body {
   position: sticky;
   top: 0;
   z-index: 2;
+  cursor: pointer;
 }
 
+/* Hover effect for weekday headers */
+.calendar-grid .weekday:hover {
+  background-color: #b2ebf2; 
+}
+
+/* Hover effect for time slots */
+.calendar-grid > div:not(.weekday):not(.time):hover {
+  background-color: #b2ebf2;
+  cursor: pointer;
+}
 .appointment-form-container {
   display: none; /* Initially hidden */
   position: fixed;

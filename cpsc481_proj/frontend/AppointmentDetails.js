@@ -131,7 +131,7 @@ async function confirmCancel() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/appointments?id=${appointmentId}`, {
+    const response = await fetch(`http://44.243.40.96:3000/appointments?id=${appointmentId}`, {
       method: "DELETE",
     });
 
@@ -177,7 +177,7 @@ async function confirmChanges() {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/appointments", {
+    const response = await fetch("http://44.243.40.96:3000/appointments", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
