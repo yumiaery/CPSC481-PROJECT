@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Check if the parent frame or window is the monthly view
+  const parentURL = window.parent.location.href;
+  const isMonthlyView = parentURL.includes("monthly.html");
+
+  // Hide reschedule button if in monthly view
+  const rescheduleButton = document.querySelector(".reschedule-btn");
+  if (isMonthlyView && rescheduleButton) {
+    rescheduleButton.style.display = "none";
+  }
+  
   // Close the Appointment Details popup
   const closeButton = document.querySelector(".close-btn");
   closeButton.addEventListener("click", () => {
