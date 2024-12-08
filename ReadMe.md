@@ -53,7 +53,7 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
      
  6. **Filtering**:
    - Use the "Filters" dropdown to filter appointments by specific doctors.
-   - You can also view the availability of a selected doctor by observing their schedule in the calendar view, which highlights all booked and free time slots.
+   - You can also view the availability of a selected doctor by observing their schedule in the calendar view, which highlights booked time slots and shows available time slots
      
  7. **Add Appointment**:
    - You can add an appointment by selecting a free time slot on the calendar and filling in the required details.
