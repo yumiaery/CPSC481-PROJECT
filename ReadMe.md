@@ -138,7 +138,7 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
         - Click on **Cancel Appointment** to cancel the desired appointment.
         - Alternatively, clicking **Go Back** will take you back to the "Appointment Details" page.
      
-10. **Edit Details**:
+ 10. **Edit Details**:
     - This is for the use case that either patient name was enetered wrong, or appointment type is changed, or nurse/doctor has notes to add on before/after appointment and to track the status of the appointment.
     - Basically not for changing appointment date, time or doctor.
       
