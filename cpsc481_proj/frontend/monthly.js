@@ -136,7 +136,7 @@ const hardcodedCalendars = {
       const queryParams = new URLSearchParams({ month, year });
         if (selectedDoctor) queryParams.append("doctor", selectedDoctor); // Add the doctor filter if selected
 
-        const fetchURL = `http://localhost:3000/appointmentsMonthly?${queryParams.toString()}`;
+        const fetchURL = `http://44.243.40.96:3000/appointmentsMonthly?${queryParams.toString()}`;
         console.log("Fetching appointments from:", fetchURL); // Log the generated URL
 
         const response = await fetch(fetchURL);

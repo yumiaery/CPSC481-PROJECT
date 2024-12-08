@@ -159,6 +159,11 @@ body {
   display: flex;
   flex-direction: column; /* Stack content vertically */
   justify-content: flex-start;
+  cursor: pointer;
+}
+
+.day-cell:hover {
+  background-color: #b2ebf2; /* Light blue hover color */
 }
 
 .day-cell .date {
