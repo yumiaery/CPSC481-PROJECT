@@ -29,3 +29,17 @@ This is our project fro CPSC 481: Human-Computer Interaction course. We are Grou
   **Username**: DavidSmith
   **Password**: password3
 
+---
+
+## Platform and Display Requirements
+
+- **Operating Systems**:
+  - Windows 11
+- **Browsers**:
+  - Google Chrome
+  - Mozilla Firefox
+  - Microsoft Edge
+- **Device Compatibility**:
+  - A regular desktop or laptop display.
+
+---
