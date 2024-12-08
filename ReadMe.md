@@ -163,7 +163,7 @@ This is our project for CPSC 481: Human-Computer Interaction course. We are Grou
 ## Platform and Display Requirements
 
 - **Operating Systems**:
-  - Windows 11
+  - Windows 10/11
 - **Browsers**:
   - Google Chrome
   - Mozilla Firefox
