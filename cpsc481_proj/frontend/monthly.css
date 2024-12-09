@@ -1,0 +1,373 @@
+/* General Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+/* Header Styling */
+.calendar-header {
+  background-color: #c4dff0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000000;
+}
+
+.calendar-header .search-bar {
+  width: 30%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.calendar-header .filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-header .profile-icon {
+  font-size: 1.5rem;
+}
+
+/* Legend Container */
+.legend-container {
+  display: flex;
+  gap: 10px; /* Space between legend items */
+  align-items: center;
+  position: absolute; /* Position the legend container */
+  top: 20px; /* Move it closer to the top */
+  right: 200px; /* Align it to the right */
+  font-size: 0.9rem; /* Maintain font size */
+  z-index: 1; /* Ensure it's on top */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+.legend-color.doctor1 {
+  background-color: #b2afed; /* Match "Doctor1" color */
+}
+
+.legend-color.doctor2 {
+  background-color: #ebada9; /* Match "Doctor2" color */
+}
+
+.legend-color.doctor3 {
+  background-color: #a9ebdb; /* Match "Doctor3" color */
+}
+
+/* Tabs Styling */
+.tabs-header {
+  background-color: #c4dff0;
+  padding: 10px;
+  border-bottom: 2px solid #000000;
+}
+
+.view-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.view-tabs .tab {
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.view-tabs .tab:hover {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.view-tabs .tab.active {
+  background-color: #aaa;
+  color: #fff;
+}
+
+/* Date Navigation Styling */
+.calendar-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  font-weight: bold;
+  background-color: #edf6fc;
+  border-bottom: 2px solid #000000;
+}
+
+/* Monthly Calendar Grid */
+.calendar-grid.monthly {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  grid-auto-rows: 145px; /* Height for each date cell */
+  grid-template-rows: 40px; /* Height for the label cells */
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #edf6fc;
+}
+
+.day-label {
+  text-align: center;
+  font-weight: bold;
+  background-color: #c4dff0;
+  padding: 10px;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.day-cell {
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  padding: 10px;
+  position: relative;
+  height: auto;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.day-cell:hover {
+  background-color: #b2ebf2; /* Light blue hover color */
+}
+
+.day-cell .date {
+  font-weight: bold;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+/* Ensure appointments stack neatly */
+/* Ensure appointments stack neatly within the day cell */
+.appointments {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between appointment buttons */
+  overflow-y: auto;
+}
+
+/* Appointment Button Styling */
+.appointment-button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  width: calc(100% - 10px); /* Fit within the slot */
+  box-sizing: border-box;
+}
+
+.appointment-button:hover {
+  background-color: #0056b3;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Appointment Details Popup */
+.appointment-details-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: transparent;
+  border-radius: 10px;
+  width: 400px;
+  height: 620px; /* Adjust to fit form */
+  overflow-y: hidden;
+}
+
+.appointment-details-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.appointment-button.dr-smith {
+  background-color: #d61d98; /* Light red for Dr. Smith */
+  border: 1px solid #d61d98;
+}
+
+.appointment-button.dr-johnson {
+  background-color: #d64c15; /* Light green for Dr. Johnson */
+  border: 1px solid #d64c15;
+}
+
+.appointment-button.dr-lee {
+  background-color: #32d655; /* Light blue for Dr. Lee */
+  border: 1px solid #32d655;
+}
+
+/* Display menu when open */
+#profileMenu.open {
+  display: block; /* Show the menu when "open" class is added */
+}
+/* Styling for dropdown menu items */
+#profile  Menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  border-radius: 4px;
+}
+#profileMenu a:hover {
+  background-color: #60d4e2;
+  color: white;
+}
+/* Style for the pop-up window */
+.popup-window {
+  display: none; /* Hide the popup by default */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: #eaf8fc; /* Light blue background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center-align text */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+/* Style for the title */
+.popup-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/* Style for the user name text */
+.user-name {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+/* Button styling */
+.change-password-button, .close-popup-button {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.change-password-button {
+  background-color: #f3f3f3;
+  color: #333;
+  border: 1px solid #ccc;
+}
+.change-password-button:hover {
+  background-color: #26c6da;
+}
+.change-password-button .lock-icon {
+  margin-right: 5px;
+}
+.close-popup-button {
+  background-color: #f44336;
+  color: #fff;
+  margin-top: 10px;
+}
+.close-popup-button:hover {
+  background-color: #e57373;
+}
+
+/* Style for the search results dropdown */
+.search-container {
+  position: relative;
+  display: inline-block;
+}
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: none; /* Initially hidden */
+}
+.search-results .result-item {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+}
+.search-results .result-item:last-child {
+  border-bottom: none;
+}
+.search-results .result-item:hover {
+  background-color: #f0f0f0;
+}
+.search-results .appointment-type {
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 10px;
+}
+.search-container .search-bar {
+  width: 400px; /* Customize this as needed */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
