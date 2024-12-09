@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  
+  // Check if the parent frame or window is the monthly view
   const parentURL = window.parent.location.href;
   const isMonthlyView = parentURL.includes("monthly.html");
 

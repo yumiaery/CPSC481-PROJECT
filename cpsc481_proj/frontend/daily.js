@@ -248,12 +248,11 @@ function openAppointmentDetails(appointment) {
   const query = new URLSearchParams({
     id: appointment.id, // Pass the unique appointment ID
     patient_name: appointment.patient_name,
-    date: new Date(appointment.appointment_date).toISOString().split("T")[0],
-    // date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
-    //   month: "short",
-    //   day: "numeric",
-    //   year: "numeric",
-    // }),
+    date: new Date(appointment.appointment_date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
     time: appointment.start_time,
     endTime: appointment.end_time,
     doctor: appointment.doctor_name,
